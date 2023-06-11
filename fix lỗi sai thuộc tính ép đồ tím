@@ -1,1 +1,62 @@
+-----------------------------------------------------------------------------------------------------------------------------------------
+Bản 6.0
+Bước 1: Vào /home/jxser/server1/script/item/compound/
+sửa file equid_compound.lua
+Sửa từ dòng 50/63: for i = 1, 5 do thành for i = 1, 6 do
+
+Bước 2: 
+/home/jxser/server1/script/global/lbadmin.lua
+tìm hàm laydongxanh
+copy và thêm thành laydoxanhkn
+------lay do xanh kham namkn------------
+function laydoxanhkn()
+local tbOpt = {}
+for i=1, getn(tbDoXanh) do
+tinsert(tbOpt, {tbDoXanh[i].szName, laydoxanh1kn, {i}})
+end
+
+tinsert(tbOpt, {"Tho¸t."})
+CreateNewSayEx(LENHBAI_ADMIN.."Xin mêi lùa chän trang bÞ:", tbOpt)
+end
+function laydoxanh1kn(nType)
+local tbEquip = %tbDoXanh[nType]["tbEquip"]
+local tbOpt = {}
+for i=1, getn(tbEquip) do
+tinsert(tbOpt, {tbEquip[i][1], laydoxanh2kn, {i, nType}})
+end
+
+tinsert(tbOpt, {"Tho¸t."})
+local szTitle = format(LENHBAI_ADMIN.."Xin mêi lùa chän trang bÞ:")
+CreateNewSayEx(szTitle, tbOpt)
+end
+function laydoxanh2kn(nIndex, nType)
+local tbOpt = {}
+tinsert(tbOpt, {"Kim", laydoxanh3kn, {nIndex, nType, 0}})
+tinsert(tbOpt, {"Méc", laydoxanh3kn, {nIndex, nType, 1}})
+tinsert(tbOpt, {"Thñy", laydoxanh3kn, {nIndex, nType, 2}})
+tinsert(tbOpt, {"Háa", laydoxanh3kn, {nIndex, nType, 3}})
+tinsert(tbOpt, {"Thæ ", laydoxanh3kn, {nIndex, nType, 4}})
+
+
+tinsert(tbOpt, {"Tho¸t."})
+local szTitle = format(LENHBAI_ADMIN.."Mêi chän hÖ:")
+CreateNewSayEx(szTitle, tbOpt)
+end
+function laydoxanh3kn(nIndex, nType, nSeries)
+g_AskClientNumberEx(0, 60, "Sè L­îng:", {laydoxanh4, {nIndex, nType, nSeries}})
+end
+function laydoxanh4kn(nIndex, nType, nSeries, nCount)
+local tbEquipSelect = %tbDoXanh[nType]["tbEquip"][nIndex]
+for i=1,nCount do AddItem(tbEquipSelect[2], tbEquipSelect[3], tbEquipSelect[4], 10, nSeries, 10, 10) end
+end
+------------------------------------------------------------------------------------------------------------------------------------------------
+8.0
+Bước 1: Vào /home/jxser/server1/script/item/compound/
+sửa file equid_compound.lua
+Sửa từ dòng 50/63: for i = 1, 5 do thành for i = 1, 6 do
+
+Bước 2: /home/jxser/server1/script/global/thinh/npc/npc_trangbi.lua:
+tìm hàm laydongxanh
+copy và thêm thành laydoxanhkn
+
 
