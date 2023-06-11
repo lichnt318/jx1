@@ -58,5 +58,10 @@ Sửa từ dòng 50/63: for i = 1, 5 do thành for i = 1, 6 do
 Bước 2: /home/jxser/server1/script/global/thinh/npc/npc_trangbi.lua:
 tìm hàm laydongxanh
 copy và thêm thành laydoxanhkn
+Quay lại /home/jxser/server1/script/global/thinh/npc/hotro
+Sửa file doxanh.lua
+tương tự như bản 6.0 chú ý đổi hết thành laydoxanhkn, laydoxanh1kn, laydoxanh2kn,laydoxanh3kn, laydoxanh4kn 
+Chú ý đổi ở hàm laydoxanh4kn ở dòng for đổi 2 số cuối thành số 10
+
 
 
