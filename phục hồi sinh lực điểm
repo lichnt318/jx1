@@ -1,0 +1,24 @@
+IncSkill(SkillId, điểm cộng)	Tăng điểm skill
+AddSkillState(SkillId, Level, giây*18)	Xuất skill trạng thái lên nhân vật trong thời gian giây*18
+-----------------------------------------------------------------------------------------------------
+Néi 30 phót, sinh lùc t¨ng 50% (t¸i sö dông v« hiÖu) 
+function main()
+	AddSkillState(450, 1, 1, 32400);
+	return 0
+end
+-------------------------------------------------
+Mçi nöa gi©y sinh lùc håi phôc: 2000 ®iÓm <enter>Mçi nöa gi©y Néi lùc håi phôc: 2000 ®iÓm
+Include( "\\script\\item\\checkmapid.lua" )
+
+function EatMedicine()
+		AddSkillState(472, 20, 0, 54 )	--增加玩家血量和内力持续恢复
+		Msg2Player("<#> B筺 s?d鬾g 1 C祅 Kh玭 T筼 H鉧 產n (L韓) .")	
+end
+
+---------------------------------
+Tăng sinh lực, nội lực 1000 điểm: 180 giây
+function main()
+AddSkillState(527,10,1,18*180)
+AddSkillState(528,10,1,18*180)
+return 0
+end
