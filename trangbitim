@@ -1,1 +1,16 @@
 https://www.youtube.com/watch?v=D0xeDzfxFAw&ab_channel=DavidHTM
+SV đang dùng: Pgaming update 16
+Code by Jackie Gaming
+code mặc định chưa có các dòng option:
+AddQualityItem(2,0,0,0,10,0,0,-1,-1,-1,-1,-1,-1)
+2 là qui định đồ tím do server qui định.
+0,0,0 là 3 số tương ứng 3 cột sau tên món đồ.
+10 là cấp độ món đồ.
+số 0 phía sau số 10 là qui định hệ của món đồ. tương ứng 0, 1, 2, 3, 4 (0: Kim, 1: Mộc, 2: Thủy, 3: Hỏa, 4: Thổ).
+-1,-1,-1,-1,-1,-1.
+-1 đầu tiên là hiện 1.
+-1 thứ hai là ẩn 1.
+-1 thứ ba là hiện 2.
+-1 thứ tư là ẩn 2.
+-1 thứ năm là hiện 3.
+-1 thứ sáu là ẩn 3.
