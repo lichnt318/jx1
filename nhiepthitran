@@ -1,0 +1,164 @@
+Bước 1: Thêm 2 hàm mở rộng mới. SayEx và FindNpc
+SayEx
+Tự sắp xếp số lựa chọn trong hội thoại khi số lựa chọn quá nhiều. Ví dụ 20 con boss, 20 dòng lựa chọn, nó tự điều chỉnh 10 lựa chọn rồi đến trang sau 10 lựa chọn
+FindNpc
+Tìm NPC nào đó thuộc MAP rồi trả về 3 giá trị bao gồm Tọa Độ X, Tọa Độ Y, IDMap. Phục vụ việc tìm NPC rồi phù đến vị trí đó
+Cách thực hiện
+Cách 1:
+Thêm trực tiếp vào file cần sử dụng 2 hàm mở rộng. Cách này đơn giản bởi vì chỉ việc chép code của 2 cái hàm đó vào cuối file LUA cần sử dụng 2 hàm này là xong
+Cách 2
+Tạo 1 file LUA mới. Với tên funclibex.lua (Bạn đặt tên gì thì tùy). Nằm trong thư mục script (Hoặc đâu đó miễn trong script). Chép code 2 hàm mở rộng vào đó. Rồi muốn sử dụng 2 hàm này thì dùng Include("\\scri[t\\......\\funclibex.lua"). Khuyến khích dùng cách này, bởi các hàm mở rộng còn có thể được sử dụng bởi các file LUA khác nữa (Chỉ cần Include đến file funclibex)
+Cụ thể trong bài viết này, tôi tạo funclibex.lua nằm trong script/00ff. Và trong file LUA của Nhiếp Thí Trần tôi Include("\\script\\00ff\\funclibex.lua"). Để sử dụng 2 hàm mở rộng
+Code 2 hàm mở rộng
+PHP Code:
+G_PlayerDailogData = {}
+function SayEx(nDesc,tbOpt,nSelectPerPage,nPage)
+--C¸ch dïng
+--local LoiThoai = ""
+--local tb = {}
+--tinsert(tb,{"Dßng lùa chän",Func,{Value1,Value2}})
+--SayEx(LoiThoai,tb) --KhuyÕn c¸o lµ 10 lùa chän cho 1 Page lµ tèi ®a, nhiÒu qu¸ sau khi thªm 2 dßng "Trang tr­íc" vµ "Trang KÕ" sÏ kh«ng hiÓn thÞ hÕt
+--Kh«ng cÇn thªm dßng "KÕt thóc ®èi tho¹i" v× nã sÏ tù thªm
+    if nDesc == "" or nDesc == nil then nDesc = " " end
+    local nTotalSelect = getn(tbOpt)
+    if nPage == nil then nPage = 1 end
+    if nSelectPerPage == nil then nSelectPerPage = 10 end
+    local nStart = (nPage - 1) * nSelectPerPage + 1
+    local nEnd = nStart + nSelectPerPage - 1
+    if nStart > nTotalSelect then
+        return
+    end
+    if nEnd > nTotalSelect then
+        nEnd = nTotalSelect
+    end
+    local tbSayOpt = {}
+    for i=nStart, nEnd do
+        tinsert(tbSayOpt,{tbOpt[i][1],tbOpt[i][2],tbOpt[i][3]})
+    end
+    if nStart > 1 then
+        tinsert(tbSayOpt, {"Trang Tr­íc", SayEx, {nDesc,tbOpt,nSelectPerPage, nPage - 1}})
+    end
+    if nEnd < nTotalSelect then
+        tinsert(tbSayOpt, {"Trang Sau ", SayEx, {nDesc,tbOpt,nSelectPerPage, nPage + 1}})
+    end
+    tinsert(tbSayOpt, {"KÕt thóc ®èi tho¹i"})
+    G_PlayerDailogData[PlayerIndex] = tbSayOpt
+    local tb = {}
+    for i= 1, getn(tbSayOpt) do
+        tinsert(tb, tbSayOpt[i][1].. format("/#g_DailogBack(%d)", i))
+    end
+    if type(nDesc) == "number" then
+        Describe(nDesc, getn(tb), tb)
+    else
+        TaskSay("<dec>"..nDesc, tb)
+    end
+end
+function g_DailogBack(nSelectId, nCount) --Hâ trî hµm SayEx
+    local tbSayOpt = G_PlayerDailogData[PlayerIndex]
+    G_PlayerDailogData[PlayerIndex] = nil
+    
+    if tbSayOpt and tbSayOpt[nSelectId] then
+        local nParamCount = getn(tbSayOpt[nSelectId])
+        if nParamCount == 1 then
+            return
+        elseif nParamCount == 2 then
+            local pFun = tbSayOpt[nSelectId][2]
+            pFun()
+        elseif nParamCount == 3 then
+            local pFun = tbSayOpt[nSelectId][2]
+            local tbParam = tbSayOpt[nSelectId][3]
+            
+            call(pFun, tbParam)    
+        end
+    end
+end
+function FindNpc(nName,nIDMap,nType)
+--Hµm nµy sÏ t×m kiÕm 1 NPC nµo ®ã dùa theo tªn vµ ID map
+--Sau khi t×m xong hµm sÏ tr¶ vÒ 3 gi¸ trÞ bao gåm 2 gi¸ trÞ to¹ ®é vµ 1 gi¸ trÞ ID cña Map. 2 gi¸ trÞ to¹ ®é vµ ID map nµy cã thÓ dïng ®Ó teleport ®Õn n¬i
+--NÕu kh«ng t×m ®­îc th× sÏ tr¶ vÒ 3 gi¸ trÞ lµ 0,0,0
+--nType: 1-HiÖn th«ng b¸o kh«ng t×m thÊy npc qua kªnh Msg2Player 0:Kh«ng hiÖn c¸i th«ng b¸o nµo c¶. MÆc ®Þnh lµ 0
+    if nType == nil then nType = 0 end
+    NpcIndex = GetMapNpcWithName(nIDMap,nName)
+    if NpcIndex == nil or NpcIndex == nName then
+        if nType == 1 then
+            Msg2Player("<color=green>Kh«ng t×m thÊy NPC cã tªn <color=yellow>"..nName.."<color> t¹i b¶n ®å <color=yellow>"..SubWorldName(SubWorldID2Idx(nIDMap)).."<color>.<color>")
+        end
+        return 0,0,0
+    end
+    x, y,subworld = GetNpcPos(NpcIndex[1])
+    m,n,k = floor(x/32),floor(y/32),SubWorldIdx2ID(subworld)
+    return m,n,k
+end 
+
+Bước 2: Edit file Nhiếp Thí Trần
+\script\task\tollgate\killer\nieshichen.lua
+Thêm đoạn sau vào trên cùng file
+PHP Code:
+Include("\\script\\00ff\\funclibex.lua"); 
+Tìm dòng
+PHP Code:
+function havetask() 
+Thêm vào ngay trước đoạn đó 1 đoạn code
+
+Chú thích đoạn code
+Số đầu tiên là ID cái map boss xuất hiện (Phục vụ cho FindNpc tìm trong map)
+Số thứ 2 là ID trong settings\task\tollgate\killer\killer.txt
+Cái thứ 3 là tên CHUẨN của boss được add vào map thông qua file \script\task\tollgate\killbosshead.lua
+Cái thứ 4 là tên map (Ko dùng đến nhưng lúc mình làm code để tiện theo dõi mình add cả vào
+Cái thứ 5 là level của boss. Cho các nhiệm vụ từ 20 tới 90
+Tìm đoạn code
+PHP Code:
+function havetask()
+    if ( UWorld1082 ~= 0 ) then --§· nhËn nhiÖm vô nh­ng ch­a kill boss
+    --UWorld1082 chÝnh lµ nt_getTask(1082)
+        Describe(DescLink_NieShiChen..ContentList[13], 1,ContentList[15]);
+        return 0
+    end
+    return 1
+end 
+Thay thế hoàn toàn bằng đoạn code sau
+PHP Code:
+function havetask()
+    if ( UWorld1082 ~= 0 ) then --®· nhËn nhiÖm vô nh­ng ch­a kill boss
+    --UWorld1082 chÝnh lµ nt_getTask(1082)
+        local tb = {}
+        nX,nY,nMap = FindNpc(tab_ToaDoBossST[UWorld1082][3],tab_ToaDoBossST[UWorld1082][1])
+        if  nX ~= 0 and nY~=0 and nMap~=0 then --con boss cã mÆt ë trªn map
+            nDesc = DescLink_NieShiChen.." S¸t thñ "..tab_ToaDoBossST[UWorld1082][3].." vÉn cßn sèng, ng­¬i cßn ch­a tiªu diÖt ®­îc h¾n."
+            tinsert(tb,{"H·y ®­a ta ®Õn ®ã",gotobossst,{nX,nY,nMap}})
+        else
+            nDesc = "HiÖn t¹i s¸t thñ "..tab_ToaDoBossST[UWorld1082][3].." ®· lÈn trèn, ng­¬i ph¶i kiªn nhÉn chê tin tøc."
+            tinsert(tb,{"Ta sÏ trë l¹i sau",Quit})
+        end
+        SayEx(nDesc,tb)
+        return 0
+    end
+    return 1
+end 
+Tìm đoạn code tiếp theo
+PHP Code:
+function showboss(row)
+    Describe(DescLink_NieShiChen..ContentList[16], 12, killertabfile:getCell("BossName",row+1).."/#givetask("..(row+1)..")", killertabfile:getCell("BossName",row+2).."/#givetask("..(row+2)..")", killertabfile:getCell("BossName",row+3).."/#givetask("..(row+3)..")", killertabfile:getCell("BossName",row+4).."/#givetask("..(row+4)..")", killertabfile:getCell("BossName",row+5).."/#givetask("..(row+5)..")", killertabfile:getCell("BossName",row+6).."/#givetask("..(row+6)..")", killertabfile:getCell("BossName",row+7).."/#givetask("..(row+7)..")", killertabfile:getCell("BossName",row+8).."/#givetask("..(row+8)..")", killertabfile:getCell("BossName",row+9).."/#givetask("..(row+9)..")", killertabfile:getCell("BossName",row+10).."/#givetask("..(row+10)..")", "Trang kÕ /#showbossnext("..row..")", ContentList[15]);
+end
+function showbossnext(row)
+    Describe(DescLink_NieShiChen..ContentList[16], 12, killertabfile:getCell("BossName",row+11).."/#givetask("..(row+11)..")", killertabfile:getCell("BossName",row+12).."/#givetask("..(row+12)..")", killertabfile:getCell("BossName",row+13).."/#givetask("..(row+13)..")", killertabfile:getCell("BossName",row+14).."/#givetask("..(row+14)..")", killertabfile:getCell("BossName",row+15).."/#givetask("..(row+15)..")", killertabfile:getCell("BossName",row+16).."/#givetask("..(row+16)..")", killertabfile:getCell("BossName",row+17).."/#givetask("..(row+17)..")", killertabfile:getCell("BossName",row+18).."/#givetask("..(row+18)..")", killertabfile:getCell("BossName",row+19).."/#givetask("..(row+19)..")", killertabfile:getCell("BossName",row+20).."/#givetask("..(row+20)..")", "Trang tr­íc/#showboss("..row..")", ContentList[15]);
+end
+function givetask(taskid)
+    nt_setTask(1082,taskid);
+    Describe(DescLink_NieShiChen..killertabfile:getCell("BossName",taskid)..killertabfile:getCell("BossInfo",taskid), 1, ContentList[15]);
+end 
+Thay thế hoàn toàn bằng đoạn code dưới
+PHP Code:
+function givetask(taskid,nX,nY,nMap)
+    nt_setTask(1082,taskid);
+    local nDesc = DescLink_NieShiChen..killertabfile:getCell("BossName",taskid)..killertabfile:getCell("BossInfo",taskid)
+    local tb = {}
+    tinsert(tb,{"H·y ®­a ta ®Õn ®ã",gotobossst,{nX,nY,nMap}})
+    SayEx(nDesc,tb)
+end
+function gotobossst(nX,nY,nMap)
+    NewWorld(nMap,nX,nY)
+    SetFightState(1);
+end 
+
+Bước 3: Vào game test
