@@ -1,0 +1,36 @@
+Thông tin chung
+Chào mừng các bạn đến với kênh Dev Game JX Linux Offline (Võ lâm truyền kỳ 1 offline).
+* Add NPC vào Map - Võ Lâm 1 Linux Offline
+1. Mở file shinhengfu.lua bằng WINSCP
+2. Thêm 1 hàng dòng lệnh nói chuyện bên dưới dòng nói chuyện đã có (laytoado)
+3. Thêm hàm gọi dòng lệnh mới
+* Hàm laytoado
+Bạn vào link sau để xem code
+https://drive.google.com/file/d/1yLga...
+4. Để code vào phía dưới 1 hàm khác
+5. Khởi động lại máy ảo WINXP, vì file shinhengfu.lua không có dòng lệnh dofile để thực thi lệnh trên game không cần khởi đội lại server.
+6. Vào game, nhấn vào Thần Hành Phủ, chọn dòng nói chuyện "Lay toa do", ghi chú lại tọa độ.
+7. Vào file autoexec.lua (nằm tại server1/script/global/), Thêm 1 dòng lệnh giống NPC khác, trong mục adddialognpc (như trong video). 
+8. Mở file npcs.txt (trong settings/), xem tên NPC, ID của NPC là thứ tự trong file excel trừ đi 2, ví dụ: Thứ tự 651 là NPC Công Tử Tiếu, vậy ID của NPC này là 651 - 2 = 649
+9. Thay đổi ID NPC, ID MAP, tọa độ đã ghi chú
+10. File lua qui định chức năng gì đó (bạn tạo file lua, để vào thư mục nào trong script thì phải link cho đúng)
+11. Khởi động lại server
+12. Chiêm ngưỡng thành quả
+
+
+
+ADD1 NPC mới vào bản đồ nào đó
+VÀO: server1\script\global\
+- addspreadernpc.lua
+- addxishancunnpc.lua
+- autoexec.lua 
+Muốn nấy tọa độ đang đứng thì dùng tạm hàm này add vào thần hành phù,ko thì tải cái lệnh bài của mình có sẵn hàm rồi dùng luôn cũng đc
+
+function toado()
+local w,x,y = GetWorldPos()		- Lấy tên tọa độ của MAP
+local nIdPlay = PlayerIndex		- Lấy vị trí nhân vật
+Say("M¸p sè <color=Green>"..w.."<color> täa ®é <color=Yellow>"..x..", "..y) - Hiển thị tọa độ
+end;
+
+649
+1621, 3189
