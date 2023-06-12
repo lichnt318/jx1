@@ -1,0 +1,347 @@
+Bài Này Nhằm Mục Đích Lưu Trữ , Mình Copy Từ Bên CLB Cũ Về Cho Newbie cùng Tham Khảo Và Lưu lại Tại Đây.
+------Nguồn----------- huongphieubat ----------- CLBGAMESVN
+
+
+
+
+1. Các file trong server liên quan đến skill: Skills.txt, Missile.txt, 状态图形对照表.txt (có cài font) hoặc ×´Ì¬Óë¹âÐ§Í¼ÐÎ¶ÔÕÕ±í.txt
+(no font) nằm trong Server/Settings/ và các file skill môn phái dưới dạng file .lua trong server/Script/Skill/
+
+2. Ý nghĩa các file này: Theo tui hiểu thì mỗi file nhận 1 nhiện vụ khác nhau, có tất cả các file này cùng với các file .spr trong data
+mới có thể làm thành skills hoàn chỉnh.
+- Skills.txt: liệt kê tất cả các skill sử dụng trong game của người chơi và NPC, file này quy định trạng thái (chiến, buff, bị động, chủ
+động ...), dạng skill (cận chiến, tầm xa, đuổi, ...), cự ly tương tác, cách thức tương tác lên đối tượng, các thuộc tính mà skill có thể
+sử dụng trong game (tốc độ đánh, sát thương %, điểm, tốc độ di chuyển, ... Tui sẽ đi sâu vào ở phần sau.
+
+- Missile.txt: chứa thông hiệu ứng hình ảnh của skill và một phần cách thức tương tác của skill với player hoặc NPC
+
+- 状态图形对照表.txt (có cài font) hoặc ×´Ì¬Óë¹âÐ§Í¼ÐÎ¶ÔÕÕ±í.txt (no font) chứa thông tin 1 số trạng thái đặc biệt của nhân vật
+(đa phần là trạng thái buff)
+
+- các file .lua: là các file chứa thông tin chính về tính chất vật lý của skill (damage, AR, skillcost,...) tức là skill đánh ra sẽ cho nhiu
+đam, mất bao nhiu nội lực, rồi phụ trợ bao nhiu ....
+
+Ngoài ra còn có các file .spr dc nén trong các file missiletemplate.txt, skilltemplate.txt, .pak trong data là giao diện hình ảnh với
+người chơi.
+
+3. Trong mỗi file có những ji?
+
+* Đầu tiên là Skills.txt: Chia làm nhiều cột:
+- cột A: Name: (kiểu String) tên của skill
+- cột B: Property: (kiểu String) mô tả đặc tính căn bản của skill (hỗ trợ bị động, chù động, tấn công, bùa chú...) Ví dụ: skill Thieu lam
+con phap: có property là 被动攻击辅助 (Auxiliary passive attack) tạm dịch là Hỗ trợ bị động cho tấn công.
+- cột C: SkillId (num) - Id của skill
+- cột D: Attrib (num) - thuộc tính của skill (chưa rõ, chỉ bít trấn phái thì có attrib 9999)
+- cột E:Skillstyle (num = {0,1,2,3,4,5,6,7,8,9,10,11,12}) - loại skill (không phân loại (tùy thuộc missile), tấn công, hỗ trợ chủ động, bị
+động, gọi, độc sát, thêm độc, nạp (??), ẩn(??), thay đổi, đặt mìn, sửa chữa,bắt giữ)
+- cột F:skillicon (str)- icon của skill
+- cột G: PrecastSpr (str)- trạng thái trc khi xuất chiêu (giống như ngami mỗi lần trc khi ra chiêu sẽ thấy hiệu ứng hình màu xanh trên
+thân nv)
+- cột H:Mancastsnd (Str): âm thanh đi kèm skill (nam)
+- cột I:FMcastsnd(Str) âm thanh (nữ)
+- cột J: StateSpecialId (num) - trạng thái đặc biệt chủ yếu cho buff- các bạn sẽ thấy khi buff hỗ trợ bạn sẽ thấy hình dạng skill hỗ trợ
+quanh mình và đồng đội. Đó chính là biểu hiện trong trạng thái buff. Một skill có hình dạng khác nhau nên trạng thái cũng khác nhau)
+- cột K:Is Aura (num = {0,1})- có hoặc không. hok bít nói sao cho đúng nhưng Aura là trạng thái kích hoạt khi mình đang mở skill còn
+nếu đổi skill thì mất.
+- cột L:LRSkill (quy định skill bên tay trái hay tay phải (0: Cả 2 bên, 1 chỉ bên trái, 2 chỉ bên phải, >3 chưa test)
+- cột M:needshadown: bóng (0:không; 1:có)
+-cột N:Atradius: tầm đánh (num)
+- cột P:Maxshadownnum: số bóng tối đa
+- cột Q:MslsGenerate: hiệu ứng của đường đánh (Value=0,1,2,3,4,5) (bình thường: có sao ra vậy. Cùng lúc: đối với skill có nhiều
+missile, cùng lúc xuất chiu. Tuần tự: skill n missile, xuất lần lượt từng missile. Ngẫu nhiên: không theo quy tắc nào. Cùng lúc ngẫu
+nhiên: missile ra cùng lúc nhưng hướng bay của các missile sẽ ko đồng nhất. Trải rộng: các missile dàn hàng ngang trên cùng 1
+*** phẳng)
+- cột R:MslsGenerateData num) chưa hiểu về cái này.
+- cột S:CharClass: ngũ hành {0,1,2,3,4,5} = {kim,moc,thuy,hoa,tho}
+- cột T:MisslesForm: dạng Missile {0,1,2,3,4,5,6,7}={dạng tường phẳng, đường thẳng, bột, sóng, vùng, điểm, tự tương tác}. Ví dụ:
+Skill Bông 9x CB có 3 bổng nằm trên 1 *** phẳng.
+- cột U: ChildSkillId: (num) skill nền hoặc skill liên quan. Id của skill mà skill đó dựa trên hoặc sử dụng
+- cột V: ChildSkillLevel: lev của skill nền các bạn thấy là thường là -1 vì skill nền thường là ko có lev hoặc có lev nhưng lev ko ảnh
+hưởng đến skill hiện tại
+- cột W:Childskillnum: số lượng skill nền: (num) ví dụ: 9x bổng CB mún có 6 bổng thì số skill nền cứ set lên 6 sẽ thấy 6 bổng.
+- cột X: BaseSkill: {0,1} = {không,có} có dựa trên skill nền hay ko?
+- cột Y: CharAnimId : animation (hiệu ứng hình ảnh) của nhân vật khi tiến hành skill (num)
+- cột Z: EventSkillLevel: {0,1} Khi chuyển lev skill có sử dụng hiệu ứng ji ko. (Giống như khi mình lên lev có cái hiệu ứng lên lev: một
+vòng tròn màu vàng quanh nv)
+- cột AA:Ismelee: {0,1} Cận chiến hay ko
+- cột AB: Waittime: thời gian chờ trc khi xuất skill. Thường cho các skill đa hỗ trợ. Ví dụ: Phong Sương Nga Mi có Phong sương,
+Thien Phat Thien Diep và Kim Dinh Phat Quang. Trong đó Kim Dinh ra đau tien( 4tia tỏa), tiếp theo thì Phong Suong (mưa rơi) cuối
+cùng Thiên Phát (4 tia nhập) các skill sau thường phải wait skill trc một lúc rùi mới xuất ra tạo nên thứ tự xuất hiện skill.
+- cột AC: chưa biết-cũng hok hiểu
+- cột AD: SkillCostType {0,1,2,3}={MANA|LIFE|STAMINA|MONEY} dạng tiêu hao
+- cột AE: CostValue: (num) lượng tiêu hao
+- cột AF:TimePerCast: (num) Thời gian xuất chiêu (lâu mau tùy mình, nên để 0 vì sẽ hài hòa giữa hình ảnh và tác động thực)
+- cột AG: IsPhysical: {0,1} vật lý (ở dạng này sẽ nhận hết mọi phụ trợ về tấn công ngoại công(sat thuong %,diem,bs,ls,ds,hs))
+- cột AH: TargetOnly {0,1} chỉ tác động lên mục tiêu mà mình tập trung vào (nếu để 1 thì quánh con nào chỉ chết con đó, dù kiếm có
+bay rợp trời thì mấy con xung quanh cũng hok chit)
+- cột AI: TargetEnemy {0,1} có hiệu lực với kẻ thù. Rõ ràng tấn công thì phải giết chết kẻ thù (nên các chiêu đánh sẽ thấy để 1)
+- cột AJ: TargetAlly {0,1} có hiệu lực với đồng đội. Ví dụ: nga mi buff
+- cột AK: TargetSelf {0,1} có hiệu lực lên bản thân. Tất nhiên chỉ để 1 cho những skill nào phụ trợ cho mình. Chứ skill giết mà để 1
+nữa thì lưỡng bại câu thương
+- cột AL: TargetObj {0,1} có hiệu lực lên object ví dụ như item. Mún dùng đao thiếu lâm tự chặt bỏ đồ rớt khi đánh quái thì cứ cho số
+1 vào đây
+- cột AM: ByMissle: {0,1} tùy thuộc Missile (thường cho các skill tầm xa đơn) nếu chọn 1 khi Missile vừa chạm vào đối phương là
+gây ra tác động (damage hay hỗ trợ..). Đối với các skill đa thức sát(trc khi giết thì có vài hiệu ứng phụ) như thiên vương thương.
+Quánh đủ 5 thương quái mới dính dame. Nếu để bymissile =1 thì ngay thương đầu là đã ngậm dame rùi, 5 thương sẽ thành 5 dame
+riêng
+- cột AN:IsUseAR {0,1} (Use attackrating) skill sẽ cần độ chính xác nếu để cái này =1
+- cột AO, AP, AQ, AR, AS, AT, AU, AV, AW: StartEvent StartSkillId FlyEvent FlySkillId FlyEventTime CollideEvent
+CollidSkillId VanishedEvent VanishedSkillId: Sự kiện bắt đầu (num=0,1 (khong,co)), Id skill tương ứng sự kiện bắt đầu
+(num); sự kiện lúc di chuyển (num=0,1 (khong,co)), Id skill(num); sự kiện lúc tương tác (num=0,1 (khong,co)), Id skill(num); sự kiện
+lúc biến mất (num=0,1 (khong,co)), Id skill(num). Đây là những trạng thái trong quá trình diễn ra skill từ lúc bắt đầu đến kết thúc. Nếu
+set hết cái này các bạn sẽ có 1 skill phức tạp nhiều hiệu ứng (đẹp or không tùy người tạo). Còn bình thường thì giá tri = 0
+- cột AX, AY, AZ, BA: ReqLevel(num) MaxLevel(num) EqtLimit(num) HorseLimit (0,1=khong,co): Lev yêu cầu (đẳng cấp nhân
+vật có thể sd skill) , Max lev skill (lev cao nhất của skill) và giới hạn trang bị (cái này chưa rõ), thi triển dc trên ngựa hay ko
+- cột BB: DoHurt: thời gian sát thương(num = ): nên hiểu là thời gian tính từ lúc xuất chiêu đến khi đối phương nhận hiệu ứng. Đối
+với các skill tầm xa đơn (chỉ xuất 1 lần 1 chiêu) thì nên set cái này = 0 và by missile =1 thì dame đánh sẽ trúng số khác (nếu o phù
+hợp) bạn sẽ thấy chưởng đi đằng nào rồi mà quái chưa chết hoặc chưởng chưa đến mà quái đã lăn đùng ra chết. Đối với skill đa
+thức sát thì cần set hời gian này chẳng hạn như truy tinh truc nguyet của Thien Vuong giá trị này là 60 có nghĩa thời gian quái chờ
+dính dame = 40% thời gian để 1 missile hết khoảng cách từ người đánh đến quái (chứ ko phải thời gian mà cái cây thương chạm
+dc vào quái nha) Tốc độ missile thực do skill trong file .lua quy định (hàm missle_speed_v, cái này nói sau)
+- cột BC: weaponskill: {0,1} là skill của vũ khí ? nếu là 1 thì skill này chỉ dành cho vũ khí mà thôi
+- cột BD,BE, BF, BG: Param1(num) Param1Memo(num) Param2(num) Param2Memo(num) (CHƯA HIỂU LẮM) lờ
+mờ là param1 set sự chênh lệch trc sau của các skill có nhìu missile dạng tuần tự, pram1memo ???, param2 set góc giãn cách
+giữa các missile, param2memo ???.
+- cột BH StopWhenMove: {0,1} dừng skill khi di chuyển
+- cột BI HeelAtParent (num) số 1: missile sẽ bắt đầu xuất ra từ skill đầu tiên (nếu có) hoặc từ người xuất skill nếu ko có skill đầu.
+Nếu bỏ trống hoặc set = 0 thì ở trạn thái mặc định.
+- cột BJ RelativePosType: ko bit lun
+- cột BKeaceCanUse: {0,1}sử dụng tốc độ nếu là 1: của đối tượng (người xuất chiêu, người nhận chiu) thường là các skill buff,
+người ở đâu thì vòng buff ở đó, nếu set về 0: mặc định của skill.
+- cột BL ShowEvent: {0,1} thể hiện sự kiện khi xuất chiu (ko rành) đại loại như hiệu ứng phụ trợ
+- cột BM LvlSetScript(str) đường dẫn đến file .lua quy định các thuộc tính chiến đấu, phụ trợ thực
+- các cột sau này sẽ có cấu trúc: cột tên skill rồi đến cột hàm thuộc tính (tên chính xác như trong file .lua). Cái này để qua phần file
+.lua tui nói típ. Giờ nghỉ cái. mệt quá!
+Be continued...
+
+---------- Post added at 10:57 AM ---------- Previous post was at 10:56 AM ----------
+
+Phần 2 :
+Skill (tiếp theo)
+*Missile.txt: Gồm các cột:
+- Cột A: MissleId - Id của Missile
+- Cột B: MissleName - Tên Missile (theo tui chỉ có ý rõ dễ tìm, thay đổi chả sao)
+- Cột C: MoveKind {0,1,2,3,4,5,6,7} = {No change, đường thẳng, tùy ý, vòng tròn trung tâm, xoắn ốc, truy mục tiêu, động tác của ng chơi}
+- Cột D: FollowKind {0,1,2} = {tracking, tracking NPC, tracking bulets} dạng truy {bình thường nghĩa là missile truy theo vị trí nhấp chuột, truy NPC - đuổi theo đối tượng cho đến khi tương tác hoặc ra khỏi phạm vi tương tác, cái cuối vẫn chưa bít}
+- cột E: ColFollowTarget {0,1} = {không, có} tạo hiệu ứng va chạm sau khi tương tác đối tượng
+- cột F: MissleHeight (num) chiều cao của Missile. Đối với các skill bắt đầu từ không trung (Phong Suong, Lôi Động, ....) cần có cái này lớn vì như vậy mới lấy đủ dạng rơi của skill.
+- cột G: CollidRange (num) : cái độ rộng của hiệu ứng tương tác. Ví dụ: skill Tam Nga Te Tuyet đánh trúng quái thấy quanh quái có cái vòng sáng nhỏ Nếu số này lớn thì vòng này lớn.
+- Cột H: IsRangeDmg {0,1}: có phải dame diện rộng. Nếu set cái này 0 thì 2 quái đứng kế nhau nhưng nếu chỉ 1 kiếm xuất ra thì chỉ 1 quái chết.
+- Cột I: DmgRange (num) phạm vi dame. Chỉ có tác dụng khi cột H set 1. Cột này số càng lớn thì cái phạm vi giết quái càng lớn
+- Cột JmgInterval (num) Thời gian 1 lần dame hiệu quả. Chẳng hạn nếu là 0 thì quái chỉ nhận 1 lần dame 1 lần đánh khi missile qua thì hết. Còn nếu để số lớn thì hiệu ứng dame còn lại và quái sẽ có thể tiếp tục nhận dame dù ko còn skill. (Rõ nhất chắc là skill độc)
+- Cột K: LifeTime (num) Thời gian tồn tại missile. Có nghĩa 1 missile đánh ra phải có thời gian tồn tại. Thời gian càng dài missile tồn tại càng lâu nếu dài quá dễ làm rối màn hình vì sự dồn các missile khi đánh nhìu lần.
+- Cột L: Speed (num) - tốc độ missile (ko nên nhầm lẫn với tốc độ xuất chiu cũng như tốc độ missile tương tác thực) Tốc độ xuất chiu là thời gian giãn cách giữa 2 lần ra chiu liên tiếp. Tốc độ missile tương tác thực là cái tác động lên cái ko hình ko tiếng nhưng giết dc, hỗ trợ dc lên đối tượng nhận. Còn tốc độ missile chỉ có ý nghĩa cái kiếm này hay cái đao kia bay nhanh hay chậm thui, chỉ là cái mình thấy. Kinh nghiệm: Đối với các skill tầm xa nên để cái speed này = 0. vì như thế nó sẽ tùy thuộc vào skills.txt và file .lua như thế tương quan giữa hiệu ứng và hiệu quả sẽ tốt hơn.
+- Cột M Zspeed: (num) cái này giành cho skill missile di chuyển theo trục thẳng đứng tốc độ tính từ trên xuống sẽ là số âm(ngược chiều trục Oy trong không gian) và từ dưới lên sẽ là số dương.
+- Cột N: Zacc: tui đoán là gia tốc phương z - cái này chưa rõ.
+- Cột O LoopPlay: lặp lại {0,1} = {không,có}
+- Cột P,Q,R: SubLoop, SubStart, SubStop: vòng lặp phụ {0,1}, thời gian bắt đầu (num), thời gian kết thúc (num) chỉ có tác dụng đối với skill đa hiệu ứng. Ví dụ: CB rồng 9x: rồng bay tới quái. Vòng lặp chính là khi bạn nhấp chuột trái vào quái và thả đó thì rồng cứ lao vào đớp cho đến khi quái chết hay ngoài vùng phủ sóng hoặc hết mana. Vòng lặp phụ: mỗi lần rồng bay tới khi gặp quái thì còn đớp qua đớp lại vài lần mới hết 1 lần thả skill.
+- Cột S: ResponseSkill (str): skill đáp ứng - chưa hiểu
+- Cột T: CanDestroy {0,1} nếu set 1 thì gặp đá hay cây hay vật cản sẽ mất
+- Cột U: ColVanish {0,1} sau khi có hiệu ứng va chạm rùi thì nếu để cái này 0 thì hơi kỳ vì quanh quái cứ hiện cái hiệu ứng này.
+- Cột V: CanSlow {0,1} tốc độ missile sẽ chậm dần nếu set cái này lên 1
+- Cột W: CanColFriend {0,1} set 1 thì sẽ thấy bạn thù ji nó cũng lao vào hết
+- Cột X:AutoExplode {0,1} nghe explode thì hơi kinh, chủ yếu là giành cho nhóm skill chưởng hoặc dạng vòng tròn, nó tương tự như loopplay. set cái này =1 cho các skill chưởng thì cứ bấm đánh quái 1 lần thì missile sẽ tự động lo phần còn lại. set 0 thì bấm lần nào missile mới ra lần đó.
+- Cột Y,Z,AA: Param1, Param2, Param3 (num): ko bit test thử vài skill của Nga Mi chẳng thấy ji khác-ai test dc ji đóng góp thêm nha.
+- Cột AB: MultiShow {0,1): set 1 khi skill nào trong quá trình diễn ra có nhìu hiệu ứng như skill rồng CB có hiệu ứng bay, va chạm vậy thì set cái này 1. Không có đa hiệu ứng thì set 0 (mún 1 cũng dc những sẽ chẳng có ji đâu).
+- Các cột còn lại là đường dẫn đến file hiệu ứng .spr và thông số kèm theo (64,16,1 ji ji đó cái này ai rành về Corel thì coi giùm nha)
+Hết phần 2
+Be continued...
+
+*状态图形对照表.txt (Status and-effect graphics tables.txt) liệt kê các trạng thái của các chiêu ở dạng Aura
+- cột A: tên trạng thái
+- Cột B: đường dẫn file .spr của trạng thái là các hình ảnh của các vòng hỗ trợ hoặc tương tác ta thấy trong game
+- Cột C: Loại {头顶,脚底,身上} = {Í·¶¥,½Åµ×,ÉíÉÏ}= {đầu, chân, thân} vị trí thể hiện aura trên NPC. Ví dụ: trên thân có Thanh Âm Phạn Xướng của Nga Mi, dưới chân có các chiu buff của Nga mi (Mộng Điệp, Lưu THủy, Phật Tâm...), trên đầu thấy nhìu nhất ở các skill bùa chú.
+- Cột D: Dạng lan tỏa: hầu hết trong này chỉ có dạng vòng tròn
+- Cột E, F, G, H: là các cột mô tả hiêu ứng hình ảnh, I là thời gian hiệu ứng, J là hiệu ứng có thể hiện trên đối tượng hay ko {0,1}.
+- Cột K: tên của skill sử dụng trạng thái.
+*skill.lua
+SkillExp(i) = Exp1*a^(i-1)*time*range
+function SkillExpFunc(Exp0,a,Level,Time,Range)
+return floor(Exp0*(a^(Level-1))*Time*Range/2)
+end
+-- Đây là công thức tính toán Exp cho skill 9x, cũng như Vinagame, đây là dạng skill tăng kinh nghiệm ko phải tăng theo điểm. Có lẽ do server bị thiếu chức năng nào đó nên toàn bộ hệ thống tăng skill theo kn ko hoạt động?! -- Công thức này tui chưa hiểu chỉ biết các thông số ảnh hưởng gồm có mức độ thăng cấp skill a, lev skill Level, thời gian xuất skill (??) Time, và phạm vi skill Range. Ngoài ra còn serie dame (chuỗi dame)
+- skill dc đặt theo dạng sau:
+SKILLS={
+-- tên skills = {
+-- Thuộc tính magic = {
+-- [1]={{cấp,giá trị，đường}，{cấp,giá trị，đường}，。。。。}，
+-- [2]={{cấp,giá trị，đường}，{cấp,giá trị，đường}，。。。。}，
+-- [3]={{cấp,giá trị，đường}，{cấp,giá trị，đường}，。。。。}，
+-- }，
+-- Thuộc tính magic= {
+-- [1]={{cấp,giá trị，đường}，{cấp,giá trị，đường}，。。。。}，
+-- [2]={{cấp,giá trị，đường}，{cấp,giá trị，đường}，。。。。}，
+-- [3]={{cấp,giá trị，đường}，{cấp,giá trị，đường}，。。。。}，
+-- }，
+-- 。。。。。
+-- }，
+-- 。。。。。
+--}
+Giải thích sơ: cái SKILLS: tên hàm của skill giống như mở đầu hàm thì có funtionc do đó cái này giữ nguyên
+- tên skills: theo quy tắc của jx: ví dụ nga mi kiếm pháp thì tên là emei_jianfa, mộng điệp có tên là mengdie- không thay đổi dc, thay đổi lỗi script ráng chịu
+- thuộc tính magic trong magicdesc.ini: ví dụ lifereplenish_v: là phục hồi sl mỗi nửa giây ... điểm
+- [1],[2],[3] là các thông số (parameters) của thuộc tính magic
+- cấp: là level của skill, giá trị: số gán cho skill ở level đó, đường: chưa hiểu có thể là đường cong hoặc ko phải dạng dg thẳng thì set cái số vào đây???
+Lấy 1 ví dụ: Tam Nga Tề Tuyết (skill kiếm 9x của Nga Mi)
+sane_jixue={ --三峨霁雪
+physicsenhance_p={{{1,510},{15,1200},{20,1637}}},
+seriesdamage_p={{{1,20},{15,20},{20,60},{21,62}}},
+colddamage_v={
+[1]={{1,1310},{20,2435}},
+[3]={{1,1310},{20,2451}}
+},
+deadlystrike_p={{{1,10},{20,54}}},
+missle_speed_v={{{1,28},{20,32},{21,32}}},
+skill_attackradius={{{1,448},{20,512},{21,512}}},
+skill_cost_v={{{1,35},{20,35}}},
+skill_eventskilllevel={{{1,1},{20,20}}},
+skill_startevent={
+[1]={{1,0},{10,0},{10,1},{20,1}}, [3]={{1,329},{20,329}}
+},
+skill_showevent={{{1,0},{10,0},{10,1},{20,1}}},
+addskillexp1={{{1,0},{2,0}},{{1,1},{20,1}},{{1,0}, {2,0}}},
+skill_skillexp_v={{ {1,SkillExpFunc(5000,1.25,1,3,1)},
+{2,SkillExpFunc(5000,1.15,2,3,1)},
+{3,SkillExpFunc(5000,1.16,3,3,1)},
+{4,SkillExpFunc(5000,1.17,4,3,1)},
+{5,SkillExpFunc(5000,1.18,5,3,1)},
+{6,SkillExpFunc(5000,1.19,6,3,1)},
+{7,SkillExpFunc(5000,1.20,7,3,1)},
+{8,SkillExpFunc(5000,1.21,8,3,1)},
+{9,SkillExpFunc(5000,1.22,9,3,1)},
+{10,SkillExpFunc(5000,1.23,10,3,1)},
+{11,SkillExpFunc(5000,1.24,11,3,1)},
+{12,SkillExpFunc(5000,1.23,12,3,1)},
+{13,SkillExpFunc(5000,1.22,13,3,1)},
+{14,SkillExpFunc(5000,1.21,14,3,1)},
+{15,SkillExpFunc(5000,1.20,15,3,1)},
+{16,SkillExpFunc(5000,1.19,16,3,1)},
+{17,SkillExpFunc(5000,1.18,17,3,1)},
+{18,SkillExpFunc(5000,1.17,18,3,1)},
+{19,SkillExpFunc(5000,1.16,19,3,1)},
+{20,SkillExpFunc(5000,1.15,20,3,1)},
+}},
+},
+- Tên skill: sane_jixue
+- Các thuộc tính magic: Tăng sát thương vật lý - physicsenhance_p chuỗi dame - seriesdamage_p Băng sát ngoại công (điểm) - colddamage_v tỉ lệ chí mạng  - deadlystrike_p tốc độ di chuyển missile - missle_speed_v Phạm vi hiệu quả - skill_attackradius tiêu tốn - skill_cost_v sự kiện lên lev skill - skill_eventskilllevel sự kiện bắt đầu skill - skill_startevent sự kiện thể hiện skill - skill_showevent exp của skill - addskillexp1 thiết đặt giá trị kinh nghiệm skill - skill_skillexp_v
+- Lấy 1 thuộc tính làm ví dụ:
+colddamage_v={
+[1]={{1,1310},{20,2435}},
+[3]={{1,1310},{20,2451}}
+},
+thông số [1]={{cấp 1 sẽ có băng sát ngoại công là 1310 (1,1310)},{cấp 20 sẽ là 2435}}
+thông số [3] ý nghĩa tương tự nhưng giá trị khác, tùy thuộc vào thuộc tính. thuộc tính dame thì là giống như set các trường hợp ăn dame không phải lúc nào cũng dame 2435 mà có thể hơn hoặc thấp hơn. Thông số có thể khác nhau về ý nghĩa dù cùng thuộc tính. Có nghĩa là thông số [1] có thể quy định trình tự, thông số [2], [3] quy định giá trị...
+Khi skill mở bao nhiêu { thì khi hết skill cũng phải đóng đủ bấy nhiêu }.
+Các thuộc tính thường set 2 đến 3 thông số theo hệ lev như vầy:
+thuộc tính={{{1, giá trị},{20, giá trị},{21, giá trị}}}, để "chốt" giá trị đầu, giá trị cuối khoảng giữa máy sẽ tự tính theo pt f(x) = ax + b. Giá trị lev 21 là để mở rộng trạng thái vượt ngưỡng 20 thì mức độ tăng giá trị có thay đổi (thường theo hướng nhiều hơn)
+- Việc các thuộc tính này có dc thể hiện trong skill hay ko thì còn phụ thuộc vào việc hàm đó có dc khai báo trong skills.txt hay ko> Khai báo thuộc tính này chỉ bằng các đơn giản là copy tên thuộc tính rùi dán vào ô trống kế bên tên của skill. Ví dụ thuộc tính sát thương vật lý của Tam Nga: thì copy physicsenhance_p dán vào file skills.txt ở ô kế bên tên sane_jixue (các cột từ BN trở đi). Số thuộc tính tối đa có thể khai báo trong skills.txt là 10. thuộc tính thứ 11 trở đi sẽ bất hoạt.
+- Sau đây là các hàm tính toán liên quan đến các dạng đường skill (tui hiểu ý nghĩa nhưng hàm thì hok bit giải thích)
+1. Từ 2 điểm, có hàm đường thẳng: f(x) = kx + b
+y= (y2-y1)*(x-x1)/(x2-x1)+y1 (đây chính là công thức xác định giá trị y thông tọa độ 2 điểm cho trc (x1, y1), (x2,y2) dựa vào hàm đường thẳng)
+Khi x1 = x2, với x=c (x thành hằng số), lúc đó đường thẳng này sẽ vuông góc với trục x với mọi giá trị y
+Như vậy, khi bit dc 2 điểm (x1, y1), (x2,y2) ta có thể dựng dc đường thẳng đi qua 2 điểm này
+Hàm:
+function Line(x,x1,y1,x2,y2)
+if(x2==x1) then
+return y2
+end
+return (y2-y1)*(x-x1)/(x2-x1)+y1
+end
+Ứng dụng hàm này: tuyến tính của skill khi thăng cấp. chỉ cần set 2 giá trị lev, game sẽ bit cách set thông số cho các lev còn lại. hoặc đường đi của missile: chỉ cần tọa độ ng chơi và quái có thể vẽ ra đường đi của missile từ ng đi đến quái...) mới bit chừng đó 
+2. Từ 2 điểm, có hàm bậc 2: f(x) = a*x2+c
+y= (y2-y1)*x*x/(x2*x2-x1*x1)-(y2-y1)*x1*x1/(x2*x2-x1*x1)+y1 (đây chính là công thức xác định giá trị y thông tọa độ 2 điểm cho trc (x1, y1), (x2,y2) dựa vào hàm bậc 2)
+Khi x1 hay x2< 0 , y=0
+Khi x1 = x2, với x=c (x thành hằng số), lúc đó đường thẳng này sẽ vuông góc với trục x với mọi giá trị y
+Như vậy, khi bit dc 2 điểm (x1, y1), (x2,y2) ta có thể dựng dc đường tuyến tính qua 2 điểm này
+Hàm:
+function Conic(x,x1,y1,x2,y2)
+if((x1 < 0) or (x2<0))then
+return 0
+end
+if(x2==x1) then
+return y2
+end
+return (y2-y1)*x*x/(x2*x2-x1*x1)-(y2-y1)*x1*x1/(x2*x2-x1*x1)+y1
+end
+3. Từ 2 điểm, có hàm căn bậc 2: f(x)=a*sqrt(x2)+c
+y=(y2-y1)*x/(sqrt(x2)-sqrt(x1))+y1-(y2-y1)/((sqrt(x2)-sqrt(x1)) (đây chính là công thức xác định giá trị y thông tọa độ 2 điểm cho trc (x1, y1), (x2,y2) dựa vào hàm căn bậc 2)
+Khi x1 hay x2< 0 , y=0
+Khi x1 = x2, với x=c (x thành hằng số), lúc đó đường thẳng này sẽ vuông góc với trục x với mọi giá trị y
+Như vậy, khi bit dc 2 điểm (x1, y1), (x2,y2) ta có thể dựng dc đường tuyến tính qua 2 điểm này
+Hàm:
+function Extrac(x,x1,y1,x2,y2)
+if((x1 < 0) or (x2<0))then
+return 0
+end
+if(x2==x1) then
+return y2
+end
+return (y2-y1)*(x-x1)/(x2-x1)+y1
+end
+4. Vẽ đường xoắn: Link(x,points)
+- Từ chuỗi điểm dc cho trc, với 2 điểm liên tiếp có thể vẽ dc 1 đường cong.
+- Các chùm điểm sẽ có dạng :{{x1,y1,func=xxx},{x2,y2,func=xxx},...{xn,yn,func =xxx}}
+- Hàm:
+function Link(x,points)
+num = getn(points)
+if(num<2) then
+return -1
+end
+for i=1,num do
+if(points[i][3]==nil) then
+points[i][3]=Line
+end
+end
+if(x < points[1][1]) then
+return points[1][3](x,points[1][1],points[1][2],points[2][1],points[2][2])
+end
+if(x > points[num][1]) then
+return points[num][3](x,points[num-1][1],points[num-1][2],points[num][1],points[num][2])
+end
+
+c = 2
+for i=2,num do
+if((x >= points[i-1][1]) and (x <= points[i][1])) then
+c = i
+break
+end
+end
+return points[c][3](x,points[c-1][1],points[c-1][2],points[c][1],points[c][2])
+end
+5. Hàm GetSkillLevelData(levelname, data, level)
+--levelname：Tên thuộc tính magic (ví du: physicsenhance_p)
+--data：tên của skill
+--level：levels của skill
+-
+function GetSkillLevelData(levelname, data, level)
+if(data==nil) then
+return ""
+end
+if(data == "") then
+return ""
+end
+if(SKILLS[data]==nil) then
+return ""
+end
+if(SKILLS[data][levelname]==nil) then
+return ""
+end
+if(SKILLS[data][levelname][1]==nil) then
+SKILLS[data][levelname][1]={{0,0},{20,0}}
+end
+if(SKILLS[data][levelname][2]==nil) then
+SKILLS[data][levelname][2]={{0,0},{20,0}}
+end
+if(SKILLS[data][levelname][3]==nil) then
+SKILLS[data][levelname][3]={{0,0},{20,0}}
+end
+p1=floor(Link(level,SKILLS[data][levelname][1]))
+p2=floor(Link(level,SKILLS[data][levelname][2]))
+p3=floor(Link(level,SKILLS[data][levelname][3]))
+return Param2String(p1,p2,p3)
+end;
+
+function Param2String(Param1, Param2, Param3)
+return Param1..","..Param2..","..Param3
+end;
+Hết....
