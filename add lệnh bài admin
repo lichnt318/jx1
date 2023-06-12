@@ -1,0 +1,6 @@
+Phải sửa 02 file: 
+
+\script\global\lbadmin
+\script\global\loginmessage.lua
+
+local tbModAccount = {"pgaming","pgaming2","pgaming3","pgaming4","pgaming5","pgaming6","pgaming7","pgaming8","pgaming9","pgaming10","pgaming11","pgaming12","lichnt"}
