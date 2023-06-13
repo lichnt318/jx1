@@ -1,0 +1,1522 @@
+1. Lỗi đồ Minh Phượng do sai res:
+
+http://www.mediafire.com/download/tg...+phuong+vd.rar
+
+Settings -> item goldequipres.txt
+Settings -> item->004 goldequip.txt
+
+đồng bộ SV + Client
+
+2. bỏ Event trong bản Ver3:
+
+vào setting->droprate
+vào sữa các file npcdroprate10.ini -> npcdroprate119.ini
+
+sửa
+[Main]
+Count=55 thành Count=54
+
+xóa nội dụng này
+[55]
+Genre=6
+Detail=1
+Particular=1311
+RandRate=33000
+
+3. fix lỗi vào phái để làm nhiệm vụ và ko add skill:
+
+Sever nào khi vô phái cho full skill của phái .
+Vậy config như thế nào để làm nhiệm vụ mới có skill
+http://www.mediafire.com/download/sm...top%282%29.rar
+
+down về rùi chép vào server, file được share là nofont, file này sẽ fix vấn đề của bạn.
+
+4.Share tool jxEdit - edit một vài thứ trong server hay mới nhất:
+
+Chỉnh tỷ lệ rớt đồ
+Dùng chỉnh tỷ lệ rớt đồ trong các file droprate : mở file droprate, nạp danh sách item, chỉnh các thông số, add item vào file droprate, và save lại. Tính năng này chưa có chỉnh rớt tiền.
+
+
+Chỉnh shop
+Chỉnh các item có trong shop Hiệu thuốc, Thợ rèn, Tạp hóa, ....: nạp danh sách shop trong file buysell.txt, chọn 1 shop để hiện danh sách hàng trong shop, chọn 1 món hàng và add vào shop, save lại.
+Lưu ý : server TSBD không có file Settings/item/mask.txt nên phần mềm sẽ báo lỗi thiếu file này. Bạn chỉ cần tạo file mask.txt có 2 dòng trắng là xong.
+
+
+Tìm kiếm nội dung
+Dùng để tìm 1 câu nào đó trong các file. Ví dụ bạn muốn biết tất cả các task nào đã được dùng trong các script (để tạo task mới không trùng) thì : nhập "SetTask(" vào chuỗi cần tìm, chọn đường dẫn bắt đầu tìm là folder script, nhấn nút Tìm kiếm, thì bạn sẽ được danh sách các file script có chuỗi SetTask. Ví dụ nữa : bạn biết 1 NPC nào đó có nói câu "Ban can co lenh bai" nhưng không biết file script của Npc này là file nào, thì bạn dùng chức năng này để tìm ra file có chứa câu nói đó.
+
+
+Cách sử dụng
+Download về có 2 file, bỏ vào trong folder của server (cùng cấp với các folder Settings, Script).
+
+Link download :
+http://www.fshare.vn/file/324CH5YGR4/
+http://www.mediafire.com/?9vld4jdt43a7k
+
+5. Chỉnh kinh nghiệm và số tiền:
+
+Chép settings\npc\player\level_exp.txt từ server qua client
+settings/ gamesetting.ini/ [ServerConfig] ExpRate= 500 để 100 giống VNG
+MoneyRate=100 nên 20
+
+6. chỉnh giới hạn giờ chơi:
+
+sever và client: player_limittime.ini/ CloseLimit=1
+
+
+7. thêm + bớt maps trong linux gần giống như jx win.... có thể tham khảo chi tiết trong ebook 4.1:
+
+lấy ví dụ:
+Mục Maps trong server gồm có:
+*File có tên WorldSet.ini -----File này chứa các ID của từng maps được mở để chơi game.
+Cấu trúc của Flie này như sau Đây là mẫu WorldSet.ini của mình)
+
+
+
+[Init]
+Count=35 ----- Đây là số thông báo số Maps được mở.
+[World]
+World00=53------Ba Lăng Huyện
+World01=59------Thiên Vương Bang
+World02=65------Sơn Động Thiên Vương Đảo
+World03=67------Tầng 2 Sơn Động Định Hồ
+World04=71------Mê Cung Bạch Thuỷ Động
+World05=77------Mê Cung Yến Tử Động
+World06=73------Mê Cung Phục Lưu Động
+World07=115----Cái Bang Phái
+World08=80------Dương Châu
+World09=116----Tầng 1 Địa Hạ Mê Cung(Tường Vân Động)
+World10=9-------Trường Giang Nguyên Đầu
+World11=340----Mạc Cao Quật
+World12=336----Phong Lăng Độ
+World13=326----Tống Kim(Khu vuc binh nguyen (so cap))
+World14=19------Kiếm Các Tây Nam
+World15=131----Côn Lôn Phái
+World16=25------Đường Môn Phái
+World17=13------Nga Mi Phái
+World18=49------Thiên Nhẫn Giáo
+World19=103----Thiếu Lâm Phái
+World20=154----Thuý Yên Phái
+World21=81------Võ Đang Phái
+World22=22------Mê Cung Bạch Vân Động
+World23=243-----Lâm Du Quan
+World24=1--------Phượng Tường
+World25=11------Thành Đô
+World26=37------Biện Kinh
+World27=78------Tương Dương
+World28=55------Đào Hoa Nguyên
+World29=176-----Lâm An
+World30=162-----Phu Đại Lý
+World31=242-----Đảo Tẩy Tuỷ
+World32=244-----Trường Bạch Sơn Bắc Lộc
+World33=24------Mê Cung Hưỡng Thuỷ Động
+World34=23------Mê Cung Thần Tiên Động
+
+
+Phân tích:
+Vậy ở đây Count là thông số hiển thị ,tức là thống kê số maps được mở trong game.
+World00=53 là thứ tự và ID của maps được mở.Mỗi mẫu WorldSet.ini thì luôn bắt đầu phần thứ tự maps từ “World00=x”(x L à ID maps tuỳ ý) và tiếp tục “World01=…”
+“World02=…”
+“World03=…”
+Sau “=” là ID maps bạn muốn mở.
+Sau khi đã hoàn thành số maps cần mở thì đếm lại số “World…=…” mà mình mở được rồi điền vào chỗ Count sau dấu “=”
+VD: Mình mở đến “World50” thì mình sẽ khai ở Count là Count=51 .Vì World bắt đầu từ 00 mà.
+*Các dữ liệu của map trong mục Maps của server:
+Một dữ liệu maps gồm các mục như: 1 file có tên maps đó với đuôi *.wor , 1 mục mang tên maps(trong đó có các mục tên như vầy “v_089”,” v_089” tuỳ ở dữ liệu maps mà có các mục tên khác nhau.DỰa vào đó bạn cũng có thể kiểm tra xem maps nào có dữ liệu và maps nào không có dữ liệu.Trong các mục “v_089” thì lại có các file có đuôi *.dat
+*File Maplist.ini trong thư mục Settings:
+File này có liên quan đến maps nhưng không nằm trong mục Maps của server mà nằm trong mục Settings của server.
+File này chứa các ID Maps , Đường dẫn đến dữ liệu maps , tên hiển thị của từng maps trong game.
+[COLOR=#333333]Các bạn chú ý: để mở được các maps thì bạn phải dựa vào ID Maps.Tức là ID mà bạn mở trong WorldSet.ini là các ID có thong tin trong Maplist.ini
+
+8. droprate:
+
++ trong settings/droprate/npcdroprate.ini
+[Main]
+Count=50
+RandRange=1000000
+MagicRate=100
+MoneyRate=10
+MoneyScale=50
+MinItemLevel=2
+MinItemLevelScale=20
+MaxItemLevel=10
+MaxItemLevelScale=10
+
+
+9.sửa event bắt đầu và hết hạn:
+
+.Tìm đến foder tên event, rồi sửa file head.lua.Ví dụ event xchristmas2007:
+/script/event/xmas07_makesnowman/head.lua
+Sửa lại 2 dòng sau
+Code:
+xmas07_makeSnowMan_S = 14062400 -- Cái này có nghĩa là 00h 00 phút ngày 24 tháng 06 năm 2014, sửa lên ngày cao ngày bắt đầu event
+xmas07_makeSnowMan_E = 14072324 --tương tự ngày kết thúc event
+xmas07_makeSnowMan_UseTime = 14072424 --tương tự hạn dùng vp
++Bạn muốn biết nó làm việc thế nào về các event thì vào script/activitysys/config trong đó chứa tất cả folder các sự kiện event + 1 vài chức năng. Event giáng sinh, noel : 2,37,1010
++Random quái rớt event bạn chỉ cần vào script/activitysys/npcfunlib.lua: trong file này sẽ có những hàm chỉnh tỷ lệ rơi bằng file hay bằng script. Có 1 vài sự kiện nó sẽ include đường dẫn drop trong config.
++Npc event liên quan thì bạn chỉ cần chỉnh ngày trong config folder thì npc sẽ xuất hiện. Đa số là như vậy, nhưng bạn cần fai kiểm tra những file gọi npc trong config hoặc trong autoexc cho chắc chắn
+
+10. tắt hộp quà:
+
+tắt hộp quà
+có 3 cách :
+
+1. * Cách sửa: không cho s3relay chạy event đó nữa:
+Mở file gateway/s3relay/relaysetting/task/tasklist.ini
+Tìm file và Xóa bỏ:
+Ví dụ Code:
+[Task_58]
+TaskFile=menglanjie_06.lua
+hoặc đổi tên file trên để s3 không load file đó nữa (do không tìm thấy file)
+
+Xong vào game test
+
+Cách 2: cho các vật phẩm rớt ra của event đó vào vật phẩm đen không nhặt trong auto là đc
+
+cách 3: tìm tên và xóa event đó trong script/event hoặc chép đè update này vào sẽ không còn event đó nữa: http://www.clbgamesvn.com/diendan/sh...d.php?t=134536 hướng dẫn thì mình đã bày trong topic... lật lại là thấy nhé
+
+-- tiện ai chỉ mình cái file droprate của mấy cái cọc gỗ ở thôn, tên là gì đc không :3
+như bạn nói cũng đc... nhưng mình phải biết tên file đó và chỉnh từng map.... ví dụ :
+* Cách sửa: không cho s3relay chạy event đó nữa:
+Mở file gateway/s3relay/relaysetting/task/tasklist.ini
+Xóa bỏ:
+Code:
+[Task_58]
+TaskFile=menglanjie_06.lua
+hoặc đổi tên file trên để s3 không load file đó nữa (do không tìm thấy file)
+cái file droprate của mấy cái cọc gỗ ở thôn lên google dịch sau đó dùng chức năng tìm kiếm trên sever là đc
+Xong vào game test
+
+
+11.fix lỗi bang hội ko nâng cấp được:
+
+vào : getway/s3relay/setting/tong : chỉnh trong tong_level_data. ở dòng đầu tiên có 2 số 0 ở cột thứ 3 thứ 4 ấy. bác chỉnh thành 10 với 8 là đẳng cấp 1 vẫn nâng max tác phường
+cái số 6720 tiếp theo sau 2 số 0 ở tong_level_data đấy bác là cột cống hiến. chỉnh nó lên 672000 rồi lấy tiền vạn gửi ngân quỹ xog chuyển qua thành ngân quỹ kiến thiết là xài tẹt :d hoặc ko thì copy của t cho nhanh
+0 10 8 672000 960 0 0 0
+1 3 6 672000 2880 3 3 3
+2 6 6 1344000 8640 3 3 6
+3 8 6 2016000 21600 4 3 9
+4 9 8 3360000 33600 5 3 9
+5 10 8 504000
+
+
+12. Cách bật/tắt các sự kiện cũng như việt hóa:
+
+Bạn chỉnh trong s3relay/relaysetting/task/tasklist.ini, file này nó quy định gọi file để chạy dạng timer vậy đó. Nói sơ lun, Count của nó khai báo tổng id task khai báo + 1, cách thức gọi thì làm theo những cái có sẵn. Mún nó không chạy 1 id task nào mà mình khai thì thêm ở dưới nó ExcutedCount=-1 là nó sẽ ko chạy. Điều chỉnh thời gian thì bạn chỉnh ở những file .lua ở relaysetting/task, ví dụ cho bạn ỏ dưới đó
+Code:
+function TaskShedule()
+TaskName("Phong L¨ng §é 0:25") --tên sự kiện, muốn viết gì cũng được cũng ko quan trọng.
+TaskTime(10,00); --giờ event sẽ được chạy
+
+--ÉèÖÃ¼ä¸ôÊ±¼ä£¬µ¥Î»Îª·ÖÖÓ
+TaskInterval(1440) --60·ÖÖÓÒ»´Î ---nó sẽ chạy suốt trong cái interval timer. Ở đây là mặc định mỗi h nó chạy 1 lần 60*24 = 1440 (60: phút , 24: giờ)
+
+--ÉèÖÃ´¥·¢´ÎÊý£¬0±íÊ¾ÎÞÏÞ´Î� �� �ý
+TaskCountLimit(0) --cái này mình ko rõ lắm chưa sử dụng nhìu nên toàn để mặc dịnh là 0
+OutputMsg("=================PHONG LANG DO RUN=================="); --dang print thôi
+end
+
+function TaskContent()
+GlobalExecute("dwf \\script\\missions\\fengling_ferry\\fldmap_boat1.l ua fenglingdu_main()") --gọi hàm bạn đã viết ở folder script
+end
+
+function GameSvrConnected(dwGameSvrIP)
+end
+function GameSvrReady(dwGameSvrIP)
+end
+
+
+13.code nhận vòng sáng và danh hiệu jx linux
+
+Thêm dòng này lên đầu:
+Code:
+Include("\\script\\global\\titlefuncs.lua")
+
+
+Code:
+IncludeLib("SETTING")
+Include("\\script\\lib\\awardtemplet.lua")
+Include("\\script\\item\\gamemaster\\gm.lua")
+Include("\\script\\dailogsys\\dailogsay.lua")
+Include("\\script\\global\\fuyuan.lua")
+--Include("\\script\\global\\hotrothem.lua")
+
+
+function abcxyz(nindex)
+Title_AddTitle(nindex, 1, 4302359);
+Title_ActiveTitle(nindex);
+SetTask(1122, nindex);
+end
+function DanhHieu()
+local szTitle = "<npc>moi ban chon danh hieu"
+local tbOpt =
+{
+{"VL Kiet xuat", abcxyz,{85}},
+{"VL Minh Chu", abcxyz,{188}},
+{"Ngu Long", abcxyz,{165}},
+{"Ngu Long", abcxyz,{150}},
+{"Ngu Long", abcxyz,{189}},
+{"Tuyet The Cao Thu", abcxyz,{235}},
+{"Manh Long Tranh Ba", abcxyz,{228}},
+{"Manh Long Tranh Ba", abcxyz,{263}},
+{"Tho¸t"},
+}
+CreateNewSayEx(szTitle, tbOpt)
+end
+
+
+14.Hỏi về cách việt hoá server và font chữ:
+
+Dùng notepad++, xem thêm dưới đây:
+http://www.clbgamesvn.com/diendan/sh...d.php?t=133758
+http://www.clbgamesvn.com/diendan/sh...d.php?t=145848
+http://www.clbgamesvn.com/diendan/sh...ht=#post946038
+
+
+15. code add đồ xanh :
+
+tbDoXanh =
+{
+[1]=
+{
+szName = "D©y chuyÒn",
+tbEquip =
+{
+{"Toµn th¹ch h¹ng liªn",0,4,0},
+{"Lôc PhØ Thóy Hé Th©n phï ",0,4,1},
+}
+},
+[2]=
+{
+szName = "¸o gi¸p",
+tbEquip =
+{
+{"ThÊt B¶o Cµ Sa",0,2,0},
+{"Ch©n Vò Th¸nh Y",0,2,1},
+{"Thiªn NhÉn MËt Trang",0,2,2},
+{"Gi¸ng Sa Bµo",0,2,3},
+{"§*êng Nghª gi¸p",0,2,4},
+{"V¹n L*u Quy T«ng Y",0,2,5},
+{"TuyÒn Long bµo",0,2,6},
+{"Long Tiªu ®¹o Y",0,2,8},
+{"Cöu VÜ B¹ch Hå trang",0,2,9},
+{"TrÇm H*¬ng sam",0,2,10},
+{"TÝch LÞch Kim Phông gi¸p",0,2,11},
+{"V¹n Chóng TÒ T©m Y",0,2,12},
+{"L*u Tiªn QuÇn",0,2,13},
+}
+},
+[3]=
+{
+szName = "§ai l*ng",
+tbEquip =
+{
+{"Thiªn Tµm Yªu §¸i",0,6,0},
+{"B¹ch Kim Yªu §¸i",0,6,1},
+}
+},
+[4]=
+{
+szName = "Giµy",
+tbEquip =
+{
+{"Cöu TiÕt X*¬ng VÜ Ngoa",0,5,0},
+{"Thiªn Tµm Ngoa",0,5,1},
+{"Kim Lò hµi",0,5,2},
+{"Phi Phông Ngoa",0,5,3},
+}
+},
+[5]=
+{
+szName = "Bao tay",
+tbEquip =
+{
+{"Long Phông HuyÕt Ngäc Tr¹c",0,8,0},
+{"Thiªn Tµm Hé UyÓn",0,8,1},
+}
+},
+[6]=
+{
+szName = "Nãn",
+tbEquip =
+{
+{"Tú L« m·o",0,7,0},
+{"Ngò l·o qu¸n",0,7,1},
+{"Tu La Ph¸t kÕt",0,7,2},
+{"Th«ng Thiªn Ph¸t Qu¸n",0,7,3},
+{"YÓm NhËt kh«i",0,7,4},
+{"TrÝch Tinh hoµn",0,7,5},
+{"¤ Tµm M·o",0,7,6},
+{"Quan ¢m Ph¸t Qu¸n",0,7,7},
+{"¢m D*¬ng V« Cùc qu¸n",0,7,8},
+{"HuyÒn Tª DiÖn Tr¸o",0,7,9},
+{"Long HuyÕt §Çu hoµn",0,7,10},
+{"Long L©n Kh«i",0,7,11},
+{"Thanh Tinh Thoa",0,7,12},
+{"Kim Phông TriÓn SÝ ",0,7,13},
+}
+},
+[7]=
+{
+szName = "Vò khÝ c©n chiÕn",
+tbEquip =
+{
+{"HuyÒn ThiÕt KiÕm",0,0,0},
+{"§¹i Phong §ao",0,0,1},
+{"Kim C« Bæng",0,0,2},
+{"Ph¸ Thiªn KÝch",0,0,3},
+{"Ph¸ Thiªn chïy",0,0,4},
+{"Th«n NhËt Tr·m",0,0,5},
+}
+},
+[8]=
+{
+szName = "Ngäc béi",
+tbEquip =
+{
+{"Long Tiªn H*¬ng Nang",0,9,0},
+{"D*¬ng Chi B¹ch Ngäc",0,9,1},
+}
+},
+[9]=
+{
+szName = "Vò khÝ tÇm xa",
+tbEquip =
+{
+{"B¸ V*¬ng Tiªu",0,1,0},
+{"To¸i NguyÖt §ao",0,1,1},
+{"Khæng T*íc Linh",0,1,2},
+}
+},
+[10]=
+{
+szName = "NhÉn",
+tbEquip =
+{
+{"Toµn Th¹ch Giíi ChØ ",0,3,0},
+}
+},
+}
+function laydoxanh()
+if check_faction() == 1 then
+Talk(1, "", "Gia nhËp m«n ph¸i míi cã thÓ nhËn trang bÞ ")
+return
+end
+local tbOpt = {}
+for i=1, getn(tbDoXanh) do
+[I]tinsert(tbOpt, {tbDoXanh.szName, laydoxanh1, {i}})
+end
+
+tinsert(tbOpt, {"Kªt thóc ®èi tho¹i."})
+CreateNewSayEx("<npc>Xin mêi lùa chän trang bÞ:", tbOpt)
+end
+function laydoxanh1(nType)
+local tbEquip = %tbDoXanh[nType]["tbEquip"]
+local tbOpt = {}
+for i=1, getn(tbEquip) do
+[I]tinsert(tbOpt, {tbEquip[1], laydoxanh2, {i, nType}})
+end
+
+tinsert(tbOpt, {"Kªt thóc ®èi tho¹i."})
+local szTitle = format("<npc>Xin mêi lùa chän trang bÞ:")
+CreateNewSayEx(szTitle, tbOpt)
+end
+function laydoxanh2(nIndex, nType)
+local tbOpt = {}
+tinsert(tbOpt, {"Kim", laydoxanh3, {nIndex, nType, 0}})
+tinsert(tbOpt, {"Méc", laydoxanh3, {nIndex, nType, 1}})
+tinsert(tbOpt, {"Thñy", laydoxanh3, {nIndex, nType, 2}})
+tinsert(tbOpt, {"Háa", laydoxanh3, {nIndex, nType, 3}})
+tinsert(tbOpt, {"Thæ ", laydoxanh3, {nIndex, nType, 4}})
+
+
+tinsert(tbOpt, {"Kªt thóc ®èi tho¹i."})
+local szTitle = format("<npc>Chän hÖ:")
+CreateNewSayEx(szTitle, tbOpt)
+end
+function laydoxanh3(nIndex, nType, nSeries)
+g_AskClientNumberEx(0, 60, "Sè l*îng:", {laydoxanh4, {nIndex, nType, nSeries}})
+end
+function laydoxanh4(nIndex, nType, nSeries, nCount)
+local tbEquipSelect = %tbDoXanh[nType]["tbEquip"][nIndex]
+for i=1,nCount do AddItem(tbEquipSelect[2], tbEquipSelect[3], tbEquipSelect[4], 10, nSeries, 100, 10) end
+end
+
+
+16.Cách tắt/Bật Cẩm nang hoàng kim :
+
+bạn vào droprate trong setting . tìm các mục droprate từ 1x đến 9x rồi tìm tới ID quy định cẩm nang hoàng kim rồi xóa cái rate nó đi là ko rớt . Còn nếu muốn dùng đc phải lấy script của update2.1 cgalaxy . ( lấy cái script của cẩm nang . và nhớ chọn đúng đường dẫn quy định đến Script đó )
+
+
+17. cách thêm op vào phi phong: Phi phong vô cực bị lổi,chỉ sài được phi phong khấp thần trở xuống
+
+Tải vài update 4 của boynhay mở file goldeqiup.txt lên rồi copy mấy cái dòng phi phong mà bị lỗi trong đó bỏ qua cái sv của bạn đang chơi . nhớ đồng bộ client vs sv.
+
+
+18. Chỉnh map load sv Linux:
+
+Chỉnh ở file này: gateway\s3relay\settings\worldset.txt
+Ví dụ mình chỉnh như này là chỉ load map Ba lăng huyện:
+Code:
+MAP_ID GAMESVR_SET_1 GAMESVR_SET_2 GAMESVR_SET_3 GAMESVR_SET_4 GAMESVR_SET_5 GAMESVR_SET_6 GAMESVR_SET_7 GAMESVR_SET_8 GAMESVR_SET_9 GAMESVR_SET_10 GAMESVR_SET_11 GAMESVR_SET_12 GAMESVR_SET_13 GAMESVR_SET_14 GAMESVR_SET_15 GAMESVR_SET_16 ±¸×¢
+53 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 °ÍÁêÏØ
+Muốn mở thêm map khác thì copy cả dòng 53 rồi paste xuống dưới, sửa số 53 thành ID map muốn mở, ID map xem ở maplist.ini.
+
+
+19.script add item:
+
+- Huyền Tinh khoáng thạch:
+Code:
+AddItem(6,1,147,cấp,0,0,0) --cấp từ 1 - 10
+- Các loại khoáng thạch ép đồ tím và ép HKMP:
+Code:
+AddItem(6,1,149,1,0,0,0) --đá hiện 1
+AddItem(6,1,150,1,hệ,0,0) --đá ẩn 1, hệ Kim Mộc Thủy Hỏa Thổ tương ứng 0 1 2 3 4
+AddItem(6,1,151,1,0,0,0) --đá hiện 2
+AddItem(6,1,152,1,hệ,0,0) --đá ẩn 2, hệ như trên
+AddItem(6,1,153,1,0,0,0) --đá hiện 3
+AddItem(6,1,154,1,hệ,0,0) --đá ẩn 3, hệ như trên
+- Sát thủ giản:
+Code:
+AddItem(6,1,400,90,hệ,0,0) --hệ Kim Mộc Thủy Hỏa Thổ tương ứng 0 1 2 3 4
+- 3 loại Thủy Tinh:
+Code:
+AddEventItem(239) --Lam Thủy Tinh
+AddEventItem(240) --Tử Thủy Tinh
+AddEventItem(241) --Lục Thủy Tinh
+- Phúc duyên:
+Code:
+AddItem(6,1,122,1,0,0,0) --tiểu
+AddItem(6,1,123,1,0,0,0) --trung
+AddItem(6,1,124,1,0,0,0) --đại
+- Đồ phổ HKMP: file magicscript.txt từ dòng 241 - 393
+
+
+20.Nhiệm vụ dã tẩu ? muốn tăng lần huỷ bỏ lên thì phải làm như thế nào ? và làm nv không giới hạn:
+
+vào file th dã tẩu sửa lại. (season.lua)
+
+if nNum>=40 then
+Say("Ha! Ha! V?thi誹 h蕺p n祔! M鏸 ng祔 l祄 40 l莕 l? r錳! Ng祔 mai tr?l筰 nh?", 0);
+return 0;
+end;
+ở line 47 file seasonnpc.lua script/global
+sửa cái 40 này
+còn giới hạn hình như dòng 664 mycacel > 2
+21.Làm sao xoá item trong 1 shop ?
+
+Tất cả npc dược ở thành thị đều include vào npc dược ở Tương Dương nên bác chỉ cần xóa item này ở đây là được. Hoặc việt hóa nguyên npc này là all tất dược ở thành thị.
+Nhưng bác lần vào Npc dược ở Tương Dương thì nó lại ko có quy định các mã item 015 2019 2036 ví dụ thế mà chỉ có lệnh đối thoại. Nhưng bác nhìn lên đầu file script NPC này nó sẽ quy định item ở file good hay buysell gì đó. Bác lần đến chỗ file đó có đường dẫn luôn, mở thư mục đó nó có nhiều file định dang là .txt nên mở excel lên là được.
+
+Nếu bác Việt hóa rồi thì tìm trong thư mục đó ( gồm cả good, buysell,... ko nhớ nữa) có 1 file quy định tên item và ID mở nó lên tìm dòng chứa tên là Hồi thiên..... >>>> ô bên cạnh có id là cũng chả nhớ nốt lắm 20XX gì hay sao ấy.
+
+Nhớ lấy ID cần xóa ** thể là 20xx. Mở file good hoặc buys ( vì ko nhớ nên bác cứ mở file nào thấy toàn số và số trên là 20xx dưới là quy định ô gán item 234 235 666 777 dạng như thế này) ctrl + f cho lẹ gõ tìm 20xx id cần xóa và xóa thôi. Run lại sever
+
+
+22.Điểm tiềm năng tự động cộng max 20 điểm khi vào môn phái
+
+NPC tiếp dẫn môn phái ko add sẵn skill (thư mục cho vào script\global\, file cho vào server\settings\ )
+kiếm chùm nào mà AddMagic... vd: AddMagic(275,20) - số 20 chuyển về 1 or 0
+
+
+23.lỗi giao dịch và Lỗi bày bán hàng SV linux:
+
+Do*wnload file này : http://www.fshare.vn/file/XHHP7UBPY8/
+giải nén ra được thư mục lang, chép đè vào thư mục lang/sever1
+
+
+24.Giúp về hàm lệnh bài admin
+
+Bạn muốn thêm LB Admin và game thì bạn có thể thêm nó là 1 vật phẩm trong questkey.txt đó. Gán res cho nó, không thì xài cái res cũ của LB Tân thủ hay j j đó cũng được. Rồi thêm chức năng admin cho nó, rồi dùng lệnh lấy ra mà xài.
+
+25.Chỉnh thời gian mất item rơi trên *** đất trong jx Linux
+
+bạn vào Settings\obj mở file ObjData.txt lên bằng excel rồi tìm cột LifeTime cột này quy định thời gian item tồn tại dưới đất. số càng lớn thì time mấy càng lâ càng nhỏ thì càng mau
+
+
+26.Tắt Event với Thông Báo Linux cho s3relay ko load nữa!
+
+bạn vào gateway/s3relay/relayseting/task/task.ini mở nó lên rồi thêm đoạn này dưới event bạn muốn tắt, ExcutedCount=-1, chẳng hạn
+TaskFile=miao-ru-2200.lua
+ExcutedCount=-1
+
+
+
+27. Còn đây là tất cả các npc của tống kim báo danh
+
+jxser\server1\script\global\ÌØÊâÓÃµØ\ËÎ� �� �� �ð±¨Ãûµã\npc
+
+
+28.Lỗi map vi sơn đảo
+
+cách fix đơn giản thôi khi các bạn dùng lệnh bài lên thì đừng chạy ra liền đứng im ở đó khoản 5 10s gì đó rồi chạy ra.
+
+
+29.Vượt Ải Linux chỉnh Vượt Ải 1 người hoặc 2 ngừoi
+
+script\missions\challengeoftime\npc\dragonboat_mai n.lua
+
+if (GetTeamSize() < 4) then
+Say("Xin lçi! §éi tham gia 'NhiÖm vô Th¸ch thøc thêi gian' cÇn ph¶i cã Ýt nhÊt <color=red>4<color> ng*êi!",0)
+return
+end
+Sửa lại số 4 tùy ý
+
+
+
+30.Giúp về Hút hít linux
+
+Bạn mở file magicattrib.txt tại đường dẫn: Server\settings\item\004\magicattrib.txt
+Tại cột thứ 5, bạn gióng từ trên xuống, tìm giá trị 136. Đấy là dòng quy định hút sinh lực
+Bạn chỉnh lại giá trị tại cột 13, 14 cao lên là dc.
+
+Tương tự giá trị 137 là hút nội lực.
+Giá trị 139 là Kỹ năng vốn có.
+Giá trị 114 là Kháng tất cả.
+Giá trị 115 là Tốc độ đánh.
+Giá trị 88 là Phục hồi sinh lực.
+Giá trị 92 là Phục hồi nội lực.
+Vân vân....
+
+Sau khi đã chỉnh tại server, bạn copy file magicattrib.txt sang client tại đường dẫn tương tự để đồng bộ hóa. Vào game thưởng thức thành quả
+
+Bạn cũng có thể thay đổi giá trị lên cao hơn. Ví dụ tại dòng 65, hút sinh lực 1 - 3%, bạn đổi thành 3 - 5%, các dòng tiếp theo cứ thế tăng lên.
+Kỹ năng vốn có + 3, 5, 7, 9
+--> server toàn đồ xanh khủng, khỏi cần hoàng kim với đồ tím...
+
+
+
+31. đường dẫn npc nhận bạn đồng hành linux
+
+\server1\script\task\partner.
+đường dẫn NPC Hàng Rong linux : jxser\server1\script\global\Áã··¹¦ÄÜ.lua
+
+
+32.hướng dẫn xóa bớt map load gameserver linuxx
+
+gateway\s3relay\settings\worldset.txt
+Bonus thêm 1 số tên Map đã dịch
+333-hoa sơn phái
+341-bắc thảo nguyên
+512-vân trung đạo
+513-bách hoa cốc
+853-862 viêm đế bảo tàng
+872-biện kinh nguyên thanh âm
+871-lâm an thanh âm
+874-biện kinh yên kì
+873-lâm an yên kì
+863-trại bào
+868-hoang mạc chiến trường
+876-cổ thành chiến trường
+882-tái trạo bào chuẩn bị chiến trường
+886-hoang thạch lĩnh xung đột chiến trường
+889-ngọc lầm trở túc chiến trường
+892-phạm đảo bí cảnh
+896-cửu châu cốc
+901-thất tịch hoạt động
+926-kích cổ truyền hoa hoạt động
+935-thiên trì bí cảnh hoạt động tầng 1
+947-thiên trì bí cảnh tầng 10
+949-thí điểm cốc
+957-sấm quan mật thất
+958-quỷ mộc nhân trường
+959-tân lưỡng thủy động
+960-hoàng thành ti lôi đài
+961-khổi quỷ mộc nhân chuẩn bị
+962-viêm đế bảo tàng thạch chuẩn bị
+968-nguyệt ca đảo
+969-nguyệt ca bí cốc
+967-vô danh bí cảnh
+
+
+
+33.Về Tính Năng phong vân bảo điện:
+
+Thêm code sau vào Lễ quan:
+
+Include("\\script\\event\\bingo_machine\\bingo_mac hine_gs.lua")
+
+function PVBD()
+OpenBingoMachine()
+end
+
+Nguyên liệu dùng hàm :
+
+
+function nguyenlieu()
+AddStackItem(200,6,1,2312,1,0,0,0)
+AddStackItem(200,6,1,2312,1,0,0,0)
+AddStackItem(200,6,1,2312,1,0,0,0)
+end
+
+
+
+34.Thần Hành Phù trong Ver3 tranminhdo không hiển thị nhưng vẫn sử dụng được Và script add thần hành phù vào NPC luôn
+
+Tải bản patch 2.1 của cgalaxy hoặc patch của yoken . vào data copy các file . dmjx01.pak đến dmjx06.pak . sau đó chép qua client đang sử dụng . đồng thời nhớ khai báo file pak vào trong pakage.ini ngoài client
+Script nhận thần hành phù :
+AddItem(6,1,x,1,0,0,0)
+Trong đó X là số Item của thần hành phù hoặc các Item nằm trong setting/item/004/magicscript.txt
+vào đó seach Thần hành phù rồi lấy ID của nó bỏ vào . hình như là cột số 3 ( bỏ cái cột Name ra )
+
+
+
+35.Hỏi về cách sửa điểm tinh lực hỗn thạch trên trang bị jx linux
+
+Tinh lực tài phú sửa trong normal.txt server1 và gateway nhé
+
+thần hành phù[: shenxingfu.lua
+
+
+
+
+36.Thêm lệnh dofile vào hàm main của script muốn reload
+
+file Lễ Quan:
+Tìm hàm main:
+Mình thêm vào như sau:
+Code:
+function main()
+dofile("script/global/Â•ÈË_Àñ¹Ù.lua");
+dialog_main()
+end
+Chú ý bên trong dofile là đường dẫn chính xác tới file cần reload (dạng no font) : ở đây là Lễ Quan
+Như vậy trong game mỗi khi bấm vào Lễ Quan thì tự động thực hiện lệnh dofile: reload lại file này
+Các file script khác làm tương tự
+
+
+
+37.Cách hiển thị tiếng việt trong notepad++ cũng như excel
+
+http://www.clbgamesvn.com/diendan/sh...d.php?t=145848
+http://www.clbgamesvn.com/diendan/sh...d.php?t=133758
+
+
+
+
+
+38. Code nhận skill 15x:
+
+function cap150()
+mp = GetFaction()
+if GetLevel() >= 150 then
+if GetTask(5009) == 0 then
+if mp == "shaolin" then
+AddMagic(1055,1)
+AddMagic(1056,1)
+AddMagic(1057,1)
+SetTask(5009,GetTask(5009)+1)
+Talk(1,"","Chóc mõng b¹n ®· häc ®*îc tuyÖt kü 150 cña ThiÕu L©m ")
+elseif mp == "tianwang" then
+AddMagic(1058,1)
+AddMagic(1059,1)
+AddMagic(1060,1)
+SetTask(5009,GetTask(5009)+1)
+Talk(1,"","Chóc mõng b¹n ®· häc ®*îc tuyÖt kü 150 cña Thiªn V*¬ng ")
+elseif mp == "tangmen" then
+AddMagic(1069,1)
+AddMagic(1070,1)
+AddMagic(1071,1)
+SetTask(5009,GetTask(5009)+1)
+Talk(1,"","Chóc mõng b¹n ®· häc ®*îc tuyÖt kü 150 cña §*êng M«n ")
+elseif mp == "wudu" then
+AddMagic(1066,1)
+AddMagic(1067,1)
+SetTask(5009,GetTask(5009)+1)
+Talk(1,"","Chóc mõng b¹n ®· häc ®*îc tuyÖt kü 150 cña Ngò §éc ")
+elseif mp == "emei" then
+AddMagic(1061,1)
+AddMagic(1062,1)
+AddMagic(1014,1)
+SetTask(5009,GetTask(5009)+1)
+Talk(1,"","Chóc mõng b¹n ®· häc ®*îc tuyÖt kü 150 cña Nga My ")
+elseif mp == "cuiyan" then
+AddMagic(1063,1)
+AddMagic(1065,1)
+SetTask(5009,GetTask(5009)+1)
+Talk(1,"","Chóc mõng b¹n ®· häc ®*îc tuyÖt kü 150 cña Thóy Yªn ")
+elseif mp == "gaibang" then
+AddMagic(1073,1)
+AddMagic(1074,1)
+SetTask(5009,GetTask(5009)+1)
+Talk(1,"","Chóc mõng b¹n ®· häc ®*îc tuyÖt kü 150 cña C¸i Bang ")
+elseif mp == "tianren" then
+AddMagic(1075,1)
+AddMagic(1076,1)
+SetTask(5009,GetTask(5009)+1)
+SetTask(5009,GetTask(5009)+1)
+Talk(1,"","Chóc mõng b¹n ®· häc ®*îc tuyÖt kü 150 cña Thiªn NhÉn ")
+elseif mp == "wudang" then
+AddMagic(1078,1)
+AddMagic(1079,1)
+SetTask(5009,GetTask(5009)+1)
+Talk(1,"","Chóc mõng b¹n ®· häc ®*îc tuyÖt kü 150 cña Vâ §ang ")
+elseif mp == "kunlun" then
+AddMagic(1080,1)
+AddMagic(1081,20)
+SetTask(5009,GetTask(5009)+1)
+Talk(1,"","Chóc mõng b¹n ®· häc ®*îc tuyÖt kü 150 cña C«n L«n ")
+end
+else
+Talk(1, "", "Ng*¬i ®· nhËn råi kh«ng thÓ nhËn n÷a.")
+end
+else
+Talk(1, "", "N©ng ®Õn 150 råi h·y ®Õn t×m ta")
+end
+end
+mấy con số 1 phía sau AddMagic là cấp độ skill . có thể add bao nhiêu tùy
+
+
+
+39.Item gọi boss cả đại và tiểu:
+
+HD ** thể cho bác luôn này
+
+1. Bác theo đường dẫn này đây là file lễ quan /home/jxser/server1/script/global/Â·ÈË_Àñ¹Ù.lua
+
+mở nó ra bác viết đoạn script này để đối thoại với lễ quan nhận lệnh bài gọi boss
+
+function main()
+dofile("script/global/tieungao/duatopnhanthuong.lua");
+local tbSay = {}
+tinsert(tbSay,"Lay lenh bai goi boss./lenhbaigoiboss")
+tinsert(tbSay,"Ket thuc doi thoai./Quit")
+Say("Dai hiep can gi:", getn(tbSay), tbSay)
+
+end;
+
+function lenhbaigoiboss()
+for i =1,10 do--lap 10 lan de lay 10 cai lenh bai
+AddItem(6,1,1022,0,0,0)
+end
+end;
+
+2. Vào script\item\bosscharm.lua tìm đoạn
+local tbUseOnlyInMap =
+{
+586,587,588,589,590,591,592,593,594,595,596,597,59 8,599,600,601,602,603,604,
+}
+sử thành thêm ,53 nữa
+local tbUseOnlyInMap =
+{
+586,587,588,589,590,591,592,593,594,595,596,597,59 8,599,600,601,602,603,604,53
+}
+
+3. Restart sever, đối thoại với NPC lễ quan lấy lệnh bài rồi ra chiến.
+chú ý gọi boss ngoài thôn Ba lăng huyện nhé
+
+Hoặc tự thêm bằng cách sau:
+Tạo con boss Hk mới trên nền boss tiểu hoàng kim. Có 3 boss tiểu, rớt đồ được quy định file drop riêng đó. Độ nó thành 10 boss Đại được mà. Hay lấy em Nhím thay máu, skill, hình ảnh, drop.ini, id.... của nó cũng được. khai báo thêm trong tasklist nữa là có boss mới
+còn Boss tiểu sửa được rớt đồ như sever win
+
+
+40.Các tắt event , drop vật phẩm khi train quái tại các map trong JX Linux
+
+Tại đường dẫn : settings/droprate
+
+Sửa các file ini . bỏ giá trị có thông tin sau :
+
+Genre=0
+Detail=6
+Particular=4
+RandRate=500
+
+
+
+
+41.Xóa tài khoản nhân vật
+
+dùng Navicat -->Login vào server linux
+Nhấn vào database: server1
+tiếp đến mở table: Role
+Tìm dòng nào có tài khoản mà bạn muốn xóa thì xóa nó đi!
+Ví dụ: tài khoản tvnnam
+Thì tìm trong table Role, cái nào có Account là tvnnam thì xóa hết là ok
+
+
+
+42.h*ướng dẫn đánh ra đồ ngon
+
+http://www.clbgamesvn.com/diendan/sh...ad.php?t=31079
+
+
+
+43.mỗi lần trùng sinh từ 190 sau khi trùng sinh xong không về lv 10 mà vẫn ở lv 190
+
+jxser -> sever1 - > script -> global -> mở file translife.lua
+
+Tìm đến dòng thứ 57 "local nBaseLevel = 190" thay cái số 190 thành cấp mà muốn chuyển sinh về. -- để 1 hoặc 10 cho giống VNG
+
+trùng sinh thì xem 2 file file fuyuan.lua và translife.lua
+
+
+
+44.Thêm lệnh dofile vào hàm main của script muốn reload
+
+ví dụ:
+file Lễ Quan:
+Tìm hàm main:
+Mình thêm vào như sau:
+Code:
+function main()
+dofile("script/global/Â•ÈË_Àñ¹Ù.lua");
+dialog_main()
+end
+Chú ý bên trong dofile là đường dẫn chính xác tới file cần reload (dạng no font) : ở đây là Lễ Quan
+Như vậy trong game mỗi khi bấm vào Lễ Quan thì tự động thực hiện lệnh dofile: reload lại file này
+Các file script khác làm tương tự
+
+
+
+45.cách xóa dữ liệu nhân vật:
+
+có rất nhiều cách để Xóa dữ liệu .
+nếu dùng Navicat ta có thể xóa từng nhân vật được.
+Nếu dùng lệnh trên Centos thì nó lại càng dễ sử dụng và nhanh . nhưng có thể bạn sẽ không hình dung được dữ liệu nó nằm ở chỗ nào
+Mình thì mình dùng cách thủ công bằng WinSCP.
+1. đăng nhập vào
+2. ra đường dẫn root/var/lib/mysql/server1 --> xóa hết các file có trong foder server1
+3. vào centos gõ : service mysqld stop đợi chạy . sau đó . service mysqld start
+
+
+
+46. add Vật phẩm vào Kỳ Trân Các
+
+Tham khảo video sau: http://www.clbgamesvn.com/diendan/sh...013#post985013
+
+
+
+
+47. Code thêm skill 15x
+
+code chung:
+AddMagic(idskill,levelskill)
+
+idskill: ở trong Skills.txt
+levelskill: tối đa là 60
+
+VD:
+
+function skill15x()
+mp = GetFaction()
+if GetLevel() >= 150 then
+if GetTask(5007) == 0 then
+if mp == "shaolin" then
+AddMagic(x,y)
+SetTask(5007,GetTask(5007)+1)
+Talk(1,"","Chóc mõng b¹n ®· häc ®*îc tuyÖt kü 150 cña ThiÕu L©m ")
+elseif mp == "tianwang" then
+AddMagic(x,y)
+SetTask(5007,GetTask(5007)+1)
+Talk(1,"","Chóc mõng b¹n ®· häc ®*îc tuyÖt kü 150 cña Thiªn V*¬ng ")
+elseif mp == "tangmen" then
+AddMagic(x,y)
+SetTask(5007,GetTask(5007)+1)
+Talk(1,"","Chóc mõng b¹n ®· häc ®*îc tuyÖt kü 150 cña §*êng M«n ")
+elseif mp == "wudu" then
+AddMagic(x,y)
+SetTask(5007,GetTask(5007)+1)
+Talk(1,"","Chóc mõng b¹n ®· häc ®*îc tuyÖt kü 150 cña Ngò §éc ")
+elseif mp == "emei" then
+AddMagic(x,y)
+SetTask(5007,GetTask(5007)+1)
+Talk(1,"","Chóc mõng b¹n ®· häc ®*îc tuyÖt kü 150 cña Nga My ")
+elseif mp == "cuiyan" then
+AddMagic(x,y)
+SetTask(5007,GetTask(5007)+1)
+Talk(1,"","Chóc mõng b¹n ®· häc ®*îc tuyÖt kü 150 cña Thóy Yªn ")
+elseif mp == "gaibang" then
+AddMagic(x,y)
+SetTask(5007,GetTask(5007)+1)
+Talk(1,"","Chóc mõng b¹n ®· häc ®*îc tuyÖt kü 150 cña C¸i Bang ")
+elseif mp == "tianren" then
+AddMagic(x,y)
+SetTask(5007,GetTask(5007)+1)
+SetTask(5007,GetTask(5007)+1)
+Talk(1,"","Chóc mõng b¹n ®· häc ®*îc tuyÖt kü 150 cña Thiªn NhÉn ")
+elseif mp == "wudang" then
+AddMagic(x,y)
+SetTask(5007,GetTask(5007)+1)
+Talk(1,"","Chóc mõng b¹n ®· häc ®*îc tuyÖt kü 150 cña Vâ §ang ")
+elseif mp == "kunlun" then
+AddMagic(x,y)
+SetTask(5007,GetTask(5007)+1)
+Talk(1,"","Chóc mõng b¹n ®· häc ®*îc tuyÖt kü 150 cña C«n L«n ")
+end
+else
+Talk(1, "", "Ng*¬i ®· nhËn råi kh«ng thÓ nhËn n÷a.")
+end
+else
+Talk(1, "", "N©ng ®Õn 150 råi h·y ®Õn t×m ta")
+end
+end
+
+trong đó ! x là id skill cần add , y là cấp độ skill bạn muốn
+
+Task 5007 kiểm tra số lần nhận skill.
+điều kiện ghi rõ ở trên
+
+
+
+48.Việt Hóa Đồ Phổ Hoàng Kim Linux
+
+Check lại file atlas_compound trong settings\item\004 rồi đồng bộ qua client
+
+
+
+49.Tắt ủy thác jx linux
+
+jxser\server1\script\global\judgeoffline.lua
+
+
+50.file script nv hoàng kim
+script/task/newtask
+
+51.file quy định đồ tím trong sever linux
+
+magicattriblevel.txt
+magicattriblevel_index.txt
+
+52.Hướng dẫn Việt hóa cho bạn nào chưa biết
+Các bạn đang gặp vấn đề việt hóa Script không biết đường dẫn File .lua của npc muốn VH ở đâu? Đơn giản thôi các bạn làm như sau:
+Những thứ cần là:
+
+1)Thư mục Map của server Linux VNG
+
+http://www.clbgamesvn.com/diendan/sh...d.php?t=124375
+
+2) Tool Add Npc (Cái này trong các server cũ có đó VD: LTG 1.3 chẳng hạn)
+
+http://www.mediafire.com/download/86...ls+Add+NPC.rar
+
+Chẳng hạn các bạn tải Server LTG 1.3 về giải nén nó ra được thư mục Server trong Server vào thư mục Maps xóa hết đi chỉ để lại WorldSet.ini. Rồi Copy Maps của Server Linux VNG vào đây.
+
+Sau đó bật WorldSet.ini lên mở Map có NPC các bạn cần việt hóa. Quay trở lại mở File SwordConfig.ini chỉnh lại đường dẫn cho đúng đến Server LTG 1.3 như mình chẳng hạn. Rồi bật cái NPCtools lên sẽ thấy Map mình đã mở rồi tìm Npc cần VH thôi các bạn sẽ thấy đường dẫn đến File .lua đó tìm đến là chiến thôi. Đường dẫn ở đây là ở Script của Server Linux VNG nha chứ không phải của Server LTG 1.3 đâu nha, chẳng qua mình lấy LTG 1.3 để lấy NPCtools thôi.
+
+3.dịch TQ ở trang vietphrase.com và nhớ cài font trung quốc nhé
+
+-Lưu ý muốn bật Tool được các bạn hãy dùng File WorldSet.ini của server cũ nha thì tool mới chạy được.
+-Mấy NPC NV Hoàng Kim, Long Ngũ, Bang Hội, nói chung là tiếng Tàu... không được add cứng trên map mà add trong script, sẽ được tự thực hiện khi chạy GS, nên chúng ta đổi tên trong script đó, vào Game sẽ hiển thị tên NPC lại!
+
+53.Chia sẻ một số mẹo nhỏ soạn thảo file .lua
+
+http://www.clbgamesvn.com/diendan/sh...d.php?t=186945
+
+54.Share cách FIX BẢNG XẾP HẠNG
+
+http://www.clbgamesvn.com/diendan/sh...d.php?t=131780
+
+55.Share cái mấy cái event cho jx linux cho ai cần
+
+event : mừng Sinh nhật VLTK, Phúc-Lộc Thọ, Giáng sinh đánh quái ở thôn và thành thị ra vật phẩm.
+event : mâm ngũ quả, trung thu làm bánh, trung thu đổi ***g đèn đánh quái 9x ra.
+
+link: http://www.mediafire.com/download/ps...s5je/event.rar
+
+56.Tặng anh em mấy bộ giao diện và Ui thời tiền sữ !
+- Dành cho các bạn đổi gió !
+- Dành cho các bạn nào mở onl hút máu theo CTC !
+Link : http://www.mediafire.com/download/vh...by+NamCung.rar
+Ui võ lâm miễn phí của HOÀN MỸ KIẾM HIỆP
+http://www.mediafire.com/download/5u...2ac/Uifree.rar
+
+57.Cách thay đổi hình nền Intro đăng nhập Jx Linux Đơn Giản
+Đầu tiên các bạn phải có bộ Ui ( Chỉ lần phần Intro )
+Ở đây mình chia sẻ bạn Link Ui CTC cả bộ. rồi mình sẽ hướng dẫn tiếp
+Link : http://www.mediafire.com/download/2y...lcd/Ui+Jx1.rar
+
+Sau khi tải về và đem nhét thư mục Ui và Spr vào Client thì chắc chắn nó sẽ hiện Ui CTC
+Để Thay đổi hình ảnh mà ko làm mất giao diện thanh máu hay thanh công ** bên dưới
+Các bạn vào Ui/Ui3 Xóa 2 file .ini đi
+Tiếp tục vào Ui/Ui3/UiNewLogin Xóa 2 File ini kia. Chỉ còn chừa lại File : µÇÂ½¹ý³Ì±³¾°´°¿Ú.ini
+
+Rồi như vậy là các bạn sẽ thay đổi được hình .
+Để thay đổi hình các bạn tìm hình phù hợp để bỏ vào Spr như của cái Ui nhé !!
+Share luôn cái link intro Jx : http://www.mediafire.com/download/m8...xk3/Images.rar
+
+58.fix Vô Hình Độc + vh jx linux
+
+Về vh mọi người sử dụng jxstudio để vh
+dùng notepad hiện chữ tàu bằng cách:
+Bạn mở notepad++ =>Encoding=>Characters sets=> Chinese=>GB2312
+chú ý cài font china và cop file sang máy thật để làm nhé
+
+fix Vô Hình Độc( do skill vô hình độc dùng để đi săn nguyên liệu event nên vng mới fix lại chỉ còn giảm tốc độ) ta fix lại như sau:
+Mặc định skill Vô Hình Độc nghe đâu VNG fix phải sử dụng skill thì mới có tác dụng(mình chỉ chơi vl thu phí hồi đó thôi nên k biết rõ vụ này),giờ mình hd fix lại như bình thường
+Tìm đến đường dẫn \script\skill\wudu.lua
+Mặc định:
+PHP Code:
+wuxing_gu={ --无形蛊
+fastwalkrun_p={{{1,-10},{25,-50},{26,-50}},{{1,18*2},{20,18*2}}}
+},
+Sửa lại thành:
+PHP Code:
+wuxing_gu={ --无形蛊
+fastwalkrun_p={{{1,-10},{25,-50},{26,-50}},{{1,18*2},{20,18*2}}},
+poisondamage_v={
+[1]={{1,5},{20,25}},
+[2]={{1,20},{20,20}},
+[3]={{1,25},{2,25}}
+}
+},
+
+59. Share chức năng Admin tích hợp sẵn trong lệnh bài
+share cái Lệnh bài admin cho anh em ai chưa có thì dùng có hết hướng dẫn bên trong
+muốn add thêm chức năng thì vào server1\script\item\ib\lenhbaiadmin.lua
+link: http://www.mediafire.com/download/uc...nhBaiAdmin.rar
+
+60. Fix chế tạo đồ tím bằng huyền tinh được 6 dòng
+script\item\compound\equip_compound.lua
+
+Bạn tìm dòng trong code sau
+Code:
+function genDesItemsInfo( arynNecessaryItemIdx ) local aryDesItemInfo = {};
+for i = 1, 5 do
+local arynMagLvl = { 0, 0, 0, 0, 0, 0 };
+Thay đổi số 5 thành sô 6 là được nhé
+
+61.Lỗi đồ Minh Phượng xích lân là do sai res:
+
+http://www.mediafire.com/download/tg...+phuong+vd.rar
+
+Settings -> item goldequipres.txt
+Settings -> item->004 goldequip.txt
+
+62. Fix lệnh bài GM bị thành bất minh đạo **
+
+1. lỗi do chưa đồng bộ
+2. thiếu spr
+3. có thể client chưa update mới nhất
+
+63. chỉnh tỷ lệ rơi đồ trong event
+
+\server1\settings\droprate mấy file ini mở ra xem và so sánh với server1\settings\item\004\magicscript.txt
+
+VD : mình lấy Hép quµ Sinh nhËt 6 1 1099 làm ví dụ, Lưu ý dòng chữ đỏ nhé
+
+mở file trong droprate lên có dòng
+
+[51]
+Genre=6
+Detail=1
+Particular=1099
+RandRate=3500 <--- đây là chỉ số rớt ra khi giết quái chỉ cần chỉnh về =0 là dc
+64. Chỉnh trang bị “không thể phá hủy” và tỉ lệ rơi đồ maxop:
+
+Chỉnh trang bị “không thể phá hủy” và tỉ lệ rơi đồ maxop:
+- không thể phá hủy:
+Bạn mở file magicattrib.txt tại đường dẫn: Server\settings\item\004\magicattrib.txt
+
+Tại cột thứ 5, bạn gióng từ trên xuống, tìm giá trị 136. Đấy là dòng quy định hút sinh lực
+Bạn chỉnh lại giá trị tại cột 13, 14 cao lên là dc.
+
+
+
+Tương tự giá trị 137 là hút nội lực.
+Giá trị 139 là Kỹ năng vốn có.
+Giá trị 114 là Kháng tất cả.
+Giá trị 115 là Tốc độ đánh.
+Giá trị 88 là Phục hồi sinh lực.
+Giá trị 92 là Phục hồi nội lực.
+Vân vân....
+
+
+
+Sau khi đã chỉnh tại server, bạn copy file magicattrib.txt sang client tại đường dẫn tương tự để đồng bộ hóa. Vào game thưởng thức thành quả
+
+Bạn cũng có thể thay đổi giá trị lên cao hơn. Ví dụ tại dòng 65, hút sinh lực 1 - 3%, bạn đổi thành 3 - 5%, các dòng tiếp theo cứ thế tăng lên.
+Kỹ năng vốn có + 3, 5, 7, 9
+--> server toàn đồ xanh khủng, khỏi cần hoàng kim với đồ tím...
+Mang set động xác may mắn 100% + ăn quế hoa tửu, thiên sơn bảo lộ, treo auto là ra nhé
+
+65. code nhận 1 lần cho jxlinux
+
+function hotrotanthu()
+if GetTask(5000) <= 0 then
+AddItem(6,1,4328,0,0,0)
+AddStackItem(100,4,417,1,1,0,0,0)
+Earn(1000000)
+SetTask(5000,GetTask(5000)+1)
+else
+Talk(1,"no","b¹n ®• nhËn råi")
+end
+end
+
+
+PHP Code:
+function hotrotanthu()
+local a = GetTask(1)
+if (a == 1) then
+Talk(1,"no","b¹n ®• nhËn råi")
+else
+AddItem(6,1,4328,0,0,0)
+AddStackItem(100,4,417,1,1,0,0,0)
+Earn(1000000)
+SetTask(1,1)
+Talk(1,"no","NhËn thµnh c«ng ")
+end
+end
+
+66. add vật phẩm khóa
+
+add vật phẩm khóa
+Code:
+Include("\\script\\lib\\awardtemplet.lua")
+Code:
+tbAwardTemplet:GiveAwardByList({tbProp = {6,1,71,1,0,0}, nExpiredTime=1440, nBindState=-2}, "test", 1);
+
+- Hạn sử dụng: nExpiredTime có 2 cách tính:
+tính bằng phút: 1 ngày = 1440 phút
+hoặc tính đến ngày hết hạn, ví dụ nExpiredTime=20140601 tức là thời hạn sử dụng đến 00h00 - 01/06/2014
+- "test" cái này hình như ghi gì cũng dc
+- Số 1 cuối cùng là số lượng
+- Nếu muốn ko khóa thì xóa bỏ "nBindState=-2"
+
+
+Ví dụ: code trên add Tiên Thảo Lộ khóa vĩnh viễn, hạn sử dụng 1 ngày
+
+67. việt hóa đồ phổ HK
+
+việt hóa đồ phổ HK
+chép vào đường dẫn này nhé \\settings\\item\\huangjintupu.txt đã việt hóa
+
+http://www.mediafire.com/download/76...angjintupu.txt
+
+68. Cách thêm hoặc chỉnh sửa opt cho skill gồm 2 bước:
+- Khai báo thêm opt trong skills.txt
+- Thêm vào trong script của skill môn phái
+
+sau đó đồng bộ sever qua client..... rất ngắn gọn phải ko?
+
+69. file điều chỉnh công thức và tỉ lệ ép đồ tím
+settings/item/004/magicattriblevel từ cột L trong excel đổ đi nhé bạn
+thần bí thương nhân
+\\script\\vng_feature\\thuongnhanthanbi\\moruongfo ur\\openchestfour.lua
+
+
+70. Cần giúp đỡ về lỗi không biết gì luôn với cái luyện skill 12x của sv Cgalaxy
+
+f mp() ~= 0 then
+if HaveMagic(mangskill[mp()]) > 0 then
+expskill = 30000
+if GetSkillState(440) == 1 then
+expskill = 60000
+end
+Clear120SkillExpLimit()
+Set120SkillID(mangskill[mp()])
+Add120SkillExp (expskill)
+end
+end
+
+1 - kiểm tra môn phái
+2 - Clear120SkillExpLimit() -- xóa giới hạn
+3 - Set120SkillID(mangskill[mp()]) - Set ID Skill 12x cần add Exp
+4 - Add120SkillExp (expskill) - Add exp cho skill 12x vừa set ở trên
+
+Clear120SkillExpLimit()
+Bạn chỉ cần dùng hàm này là xóa cái Exp giới hạn trên 1 ngày của nhân vật.
+Xong thích thì luyện skill không thì add exp bao nhiêu tùy mình
+Còn exp quy định để lên cấp xem trong Script/skill
+1. Chỉnh map load sv Linux:
+
+Chỉnh ở file này: gateway\s3relay\settings\worldset.txt
+Ví dụ mình chỉnh như này là chỉ load map Ba lăng huyện:
+Code:
+MAP_ID GAMESVR_SET_1 GAMESVR_SET_2 GAMESVR_SET_3 GAMESVR_SET_4 GAMESVR_SET_5 GAMESVR_SET_6 GAMESVR_SET_7 GAMESVR_SET_8 GAMESVR_SET_9 GAMESVR_SET_10 GAMESVR_SET_11 GAMESVR_SET_12 GAMESVR_SET_13 GAMESVR_SET_14 GAMESVR_SET_15 GAMESVR_SET_16 ±¸×¢
+53 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 °ÍÁêÏØ
+Muốn mở thêm map khác thì copy cả dòng 53 rồi paste xuống dưới, sửa số 53 thành ID map muốn mở, ID map xem ở maplist.ini
+
+2.script add item:
+
+- Huyền Tinh khoáng thạch:
+Code:
+AddItem(6,1,147,cấp,0,0,0) --cấp từ 1 - 10
+- Các loại khoáng thạch ép đồ tím và ép HKMP:
+Code:
+AddItem(6,1,149,1,0,0,0) --đá hiện 1
+AddItem(6,1,150,1,hệ,0,0) --đá ẩn 1, hệ Kim Mộc Thủy Hỏa Thổ tương ứng 0 1 2 3 4
+AddItem(6,1,151,1,0,0,0) --đá hiện 2
+AddItem(6,1,152,1,hệ,0,0) --đá ẩn 2, hệ như trên
+AddItem(6,1,153,1,0,0,0) --đá hiện 3
+AddItem(6,1,154,1,hệ,0,0) --đá ẩn 3, hệ như trên
+- Sát thủ giản:
+Code:
+AddItem(6,1,400,90,hệ,0,0) --hệ Kim Mộc Thủy Hỏa Thổ tương ứng 0 1 2 3 4
+- 3 loại Thủy Tinh:
+Code:
+AddEventItem(239) --Lam Thủy Tinh
+AddEventItem(240) --Tử Thủy Tinh
+AddEventItem(241) --Lục Thủy Tinh
+- Phúc duyên:
+Code:
+AddItem(6,1,122,1,0,0,0) --tiểu
+AddItem(6,1,123,1,0,0,0) --trung
+AddItem(6,1,124,1,0,0,0) --đại
+- Đồ phổ HKMP: file magicscript.txt từ dòng 241 - 393
+
+3.Nhiệm vụ dã tẩu ? muốn tăng lần huỷ bỏ lên thì phải làm như thế nào ? và làm nv không giới hạn:
+
+
+vào file th dã tẩu sửa lại. (season.lua)
+
+if nNum>=40 then
+Say("Ha! Ha! V?thi誹 h蕺p n祔! M鏸 ng祔 l祄 40 l莕 l? r錳! Ng祔 mai tr?l筰 nh?", 0);
+return 0;
+end;
+ở line 47 file seasonnpc.lua script/global
+sửa cái 40 này
+còn giới hạn hình như dòng 664 mycacel > 2
+
+4.Làm sao xoá item trong 1 shop ?
+
+Tất cả npc dược ở thành thị đều include vào npc dược ở Tương Dương nên bác chỉ cần xóa item này ở đây là được. Hoặc việt hóa nguyên npc này là all tất dược ở thành thị.
+Nhưng bác lần vào Npc dược ở Tương Dương thì nó lại ko có quy định các mã item 015 2019 2036 ví dụ thế mà chỉ có lệnh đối thoại. Nhưng bác nhìn lên đầu file script NPC này nó sẽ quy định item ở file good hay buysell gì đó. Bác lần đến chỗ file đó có đường dẫn luôn, mở thư mục đó nó có nhiều file định dang là .txt nên mở excel lên là được.
+
+Nếu bác Việt hóa rồi thì tìm trong thư mục đó ( gồm cả good, buysell,... ko nhớ nữa) có 1 file quy định tên item và ID mở nó lên tìm dòng chứa tên là Hồi thiên..... >>>> ô bên cạnh có id là cũng chả nhớ nốt lắm 20XX gì hay sao ấy.
+
+Nhớ lấy ID cần xóa ** thể là 20xx. Mở file good hoặc buys ( vì ko nhớ nên bác cứ mở file nào thấy toàn số và số trên là 20xx dưới là quy định ô gán item 234 235 666 777 dạng như thế này) ctrl + f cho lẹ gõ tìm 20xx id cần xóa và xóa thôi. Run lại sever
+
+5.Điểm tiềm năng tự động cộng max 20 điểm khi vào môn phái
+
+NPC tiếp dẫn môn phái ko add sẵn skill (thư mục cho vào script\global\, file cho vào server\settings\ )
+kiếm chùm nào mà AddMagic... vd: AddMagic(275,20) - số 20 chuyển về 1 or 0
+
+6.lỗi giao dịch và Lỗi bày bán hàng SV linux:
+
+Do*wnload file này : http://www.fshare.vn/file/XHHP7UBPY8/
+giải nén ra được thư mục lang, chép đè vào thư mục lang/sever1
+
+7.Giúp về hàm lệnh bài admin
+
+Bạn muốn thêm LB Admin và game thì bạn có thể thêm nó là 1 vật phẩm trong questkey.txt đó. Gán res cho nó, không thì xài cái res cũ của LB Tân thủ hay j j đó cũng được. Rồi thêm chức năng admin cho nó, rồi dùng lệnh lấy ra mà xài.
+
+8.Chỉnh thời gian mất item rơi trên *** đất trong jx Linux
+
+bạn vào Settings\obj mở file ObjData.txt lên bằng excel rồi tìm cột LifeTime cột này quy định thời gian item tồn tại dưới đất. số càng lớn thì time mấy càng lâ càng nhỏ thì càng mau
+
+9.Tắt Event với Thông Báo Linux cho s3relay ko load nữa!
+
+bạn vào gateway/s3relay/relayseting/task/task.ini mở nó lên rồi thêm đoạn này dưới event bạn muốn tắt, ExcutedCount=-1, chẳng hạn
+TaskFile=miao-ru-2200.lua
+ExcutedCount=-1
+
+10. Còn đây là tất cả các npc của tống kim báo danh
+
+jxser\server1\script\global\ÌØÊâÓÃµØ\ËÎ� �� �ð±¨Ãûµã\npc
+
+11.lỗi vi sơn đảo có khi đánh được quái,co khi k đánh được quái
+
+cách fix đơn giản thôi khi các bạn dùng lệnh bài lên thì đừng chạy ra liền đứng im ở đó khoản 5 10s gì đó rồi chạy ra.
+
+12.Vượt Ải Linux chỉnh Vượt Ải 1 người hoặc 2 ngừoi
+
+script\missions\challengeoftime\npc\dragonboat_mai n.lua
+
+
+if (GetTeamSize() < 4) then
+Say("Xin lçi! §éi tham gia 'NhiÖm vô Th¸ch thøc thêi gian' cÇn ph¶i cã Ýt nhÊt <color=red>4<color> ng*êi!",0)
+return
+end
+
+Sửa lại số 4 tùy ý
+
+13.Giúp về Hút hít linux
+
+Bạn mở file magicattrib.txt tại đường dẫn: Server\settings\item\004\magicattrib.txt
+
+Tại cột thứ 5, bạn gióng từ trên xuống, tìm giá trị 136. Đấy là dòng quy định hút sinh lực
+Bạn chỉnh lại giá trị tại cột 13, 14 cao lên là dc.
+
+http://i.imgur.com/04Oy0CJ.png (http://i.imgur.com/04Oy0CJ.png)
+
+Tương tự giá trị 137 là hút nội lực.
+Giá trị 139 là Kỹ năng vốn có.
+Giá trị 114 là Kháng tất cả.
+Giá trị 115 là Tốc độ đánh.
+Giá trị 88 là Phục hồi sinh lực.
+Giá trị 92 là Phục hồi nội lực.
+Vân vân....
+
+
+
+Sau khi đã chỉnh tại server, bạn copy file magicattrib.txt sang client tại đường dẫn tương tự để đồng bộ hóa. Vào game thưởng thức thành quả
+
+Bạn cũng có thể thay đổi giá trị lên cao hơn. Ví dụ tại dòng 65, hút sinh lực 1 - 3%, bạn đổi thành 3 - 5%, các dòng tiếp theo cứ thế tăng lên.
+Kỹ năng vốn có + 3, 5, 7, 9
+--> server toàn đồ xanh khủng, khỏi cần hoàng kim với đồ tím...
+
+14. đường dẫn npc nhận bạn đồng hành linux
+
+\server1\script\task\partner.
+đường dẫn NPC Hàng Rong linux : jxser\server1\script\global\Áã··¹¦ÄÜ.lua
+
+
+15.hướng dẫn xóa bớt map load gameserver linuxx
+
+gateway\s3relay\settings\worldset.txt
+Bonus thêm 1 số tên Map đã dịch
+333-hoa sơn phái
+341-bắc thảo nguyên
+512-vân trung đạo
+513-bách hoa cốc
+853-862 viêm đế bảo tàng
+872-biện kinh nguyên thanh âm
+871-lâm an thanh âm
+874-biện kinh yên kì
+873-lâm an yên kì
+863-trại bào
+868-hoang mạc chiến trường
+876-cổ thành chiến trường
+882-tái trạo bào chuẩn bị chiến trường
+886-hoang thạch lĩnh xung đột chiến trường
+889-ngọc lầm trở túc chiến trường
+892-phạm đảo bí cảnh
+896-cửu châu cốc
+901-thất tịch hoạt động
+926-kích cổ truyền hoa hoạt động
+935-thiên trì bí cảnh hoạt động tầng 1
+947-thiên trì bí cảnh tầng 10
+949-thí điểm cốc
+957-sấm quan mật thất
+958-quỷ mộc nhân trường
+959-tân lưỡng thủy động
+960-hoàng thành ti lôi đài
+961-khổi quỷ mộc nhân chuẩn bị
+962-viêm đế bảo tàng thạch chuẩn bị
+968-nguyệt ca đảo
+969-nguyệt ca bí cốc
+967-vô danh bí cảnh
+
+16.Về Tính Năng phong vân bảo điện:
+
+Thêm code sau vào Lễ quan:
+
+Include("\\script\\event\\bingo_machine\\bingo_mac hine_gs.l ua")
+
+function PVBD()
+OpenBingoMachine()
+end
+
+Nguyên liệu dùng hàm :
+
+
+function nguyenlieu()
+AddStackItem(200,6,1,2312,1,0,0,0)
+AddStackItem(200,6,1,2312,1,0,0,0)
+AddStackItem(200,6,1,2312,1,0,0,0)
+end
+
+17.Thần Hành Phù trong Ver3 tranminhdo không hiển thị nhưng vẫn sử dụng được Và script add thần hành phù vào NPC luôn
+
+Tải bản patch 2.1 của cgalaxy hoặc patch của yoken . vào data copy các file . dmjx01.pak đến dmjx06.pak . sau đó chép qua client đang sử dụng . đồng thời nhớ khai báo file pak vào trong pakage.ini ngoài client
+Script nhận thần hành phù :
+AddItem(6,1,x,1,0,0,0)
+Trong đó X là số Item của thần hành phù hoặc các Item nằm trong setting/item/004/magicscript.txt
+vào đó seach Thần hành phù rồi lấy ID của nó bỏ vào . hình như là cột số 3 ( bỏ cái cột Name ra )
+
+18.Hỏi về cách sửa điểm tinh lực hỗn thạch trên trang bị jx linux
+
+Tinh lực tài phú sửa trong normal.txt server1 và gateway nhé
+
+thần hành phù[: shenxingfu.lua
+
+19.Thêm lệnh dofile vào hàm main của script muốn reload
+
+file Lễ Quan:
+Tìm hàm main:
+Mình thêm vào như sau:
+Code:
+function main()
+dofile("script/global/Â•ÈË_Àñ¹Ù.lua");
+dialog_main()
+end
+Chú ý bên trong dofile là đường dẫn chính xác tới file cần reload (dạng no font) : ở đây là Lễ Quan
+Như vậy trong game mỗi khi bấm vào Lễ Quan thì tự động thực hiện lệnh dofile: reload lại file này
+Các file script khác làm tương tự
+
+20.Cách hiển thị tiếng việt trong notepad++ cũng như excel
+Ở Notepad++: Encoding -> Character sets -> Western European -> Windows-1252
+21. Code nhận skill 15x:
+
+function cap150()
+mp = GetFaction()
+if GetLevel() >= 150 then
+if GetTask(5009) == 0 then
+if mp == "shaolin" then
+AddMagic(1055,1)
+AddMagic(1056,1)
+AddMagic(1057,1)
+SetTask(5009,GetTask(5009)+1)
+Talk(1,"","Chóc mõng b¹n ®· häc ®*îc tuyÖt kü 150 cña ThiÕu L©m ")
+elseif mp == "tianwang" then
+AddMagic(1058,1)
+AddMagic(1059,1)
+AddMagic(1060,1)
+SetTask(5009,GetTask(5009)+1)
+Talk(1,"","Chóc mõng b¹n ®· häc ®*îc tuyÖt kü 150 cña Thiªn V*¬ng ")
+elseif mp == "tangmen" then
+AddMagic(1069,1)
+AddMagic(1070,1)
+AddMagic(1071,1)
+SetTask(5009,GetTask(5009)+1)
+Talk(1,"","Chóc mõng b¹n ®· häc ®*îc tuyÖt kü 150 cña §*êng M«n ")
+elseif mp == "wudu" then
+AddMagic(1066,1)
+AddMagic(1067,1)
+SetTask(5009,GetTask(5009)+1)
+Talk(1,"","Chóc mõng b¹n ®· häc ®*îc tuyÖt kü 150 cña Ngò §éc ")
+elseif mp == "emei" then
+AddMagic(1061,1)
+AddMagic(1062,1)
+AddMagic(1014,1)
+SetTask(5009,GetTask(5009)+1)
+Talk(1,"","Chóc mõng b¹n ®· häc ®*îc tuyÖt kü 150 cña Nga My ")
+elseif mp == "cuiyan" then
+AddMagic(1063,1)
+AddMagic(1065,1)
+SetTask(5009,GetTask(5009)+1)
+Talk(1,"","Chóc mõng b¹n ®· häc ®*îc tuyÖt kü 150 cña Thóy Yªn ")
+elseif mp == "gaibang" then
+AddMagic(1073,1)
+AddMagic(1074,1)
+SetTask(5009,GetTask(5009)+1)
+Talk(1,"","Chóc mõng b¹n ®· häc ®*îc tuyÖt kü 150 cña C¸i Bang ")
+elseif mp == "tianren" then
+AddMagic(1075,1)
+AddMagic(1076,1)
+SetTask(5009,GetTask(5009)+1)
+SetTask(5009,GetTask(5009)+1)
+Talk(1,"","Chóc mõng b¹n ®· häc ®*îc tuyÖt kü 150 cña Thiªn NhÉn ")
+elseif mp == "wudang" then
+AddMagic(1078,1)
+AddMagic(1079,1)
+SetTask(5009,GetTask(5009)+1)
+Talk(1,"","Chóc mõng b¹n ®· häc ®*îc tuyÖt kü 150 cña Vâ §ang ")
+elseif mp == "kunlun" then
+AddMagic(1080,1)
+AddMagic(1081,20)
+SetTask(5009,GetTask(5009)+1)
+Talk(1,"","Chóc mõng b¹n ®· häc ®*îc tuyÖt kü 150 cña C«n L«n ")
+end
+else
+Talk(1, "", "Ng*¬i ®· nhËn råi kh«ng thÓ nhËn n÷a.")
+end
+else
+Talk(1, "", "N©ng ®Õn 150 råi h·y ®Õn t×m ta")
+end
+end
+mấy con số 1 phía sau AddMagic là cấp độ skill . có thể add bao nhiêu tùy
+
+Một số tổng hợp khác
+1.shaolin: Thiếu Lâm
+2.tianwang: Thiên Vương
+3.tangmen: Đường Môn
+4.wudu: Ngũ Độc
+5.emei: Nga My
+6.cuiyan: Thúy Yên
+7.gaibang: Cái Bang
+8.tianren: Thiên Nhẫn
+9.wudang: Võ Đang
+10.kunlun: Côn Lôn
+
+nguồn TVNAM clbgamesvn
